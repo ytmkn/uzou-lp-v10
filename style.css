@@ -394,7 +394,7 @@ body {
   font-size: clamp(32px, 5vw, 64px);
   font-weight: 700;
   line-height: 1.15;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
   color: var(--color-signal-white);
   margin: 0;
   /* 入場アニメーション */
@@ -486,10 +486,14 @@ body {
               transform var(--duration-fast) var(--ease-default);
 }
 
+.btn-primary {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
 .btn-primary:hover {
   background: var(--color-deep-teal);
   border-color: var(--color-deep-teal);
-  box-shadow: var(--glow-md);
+  box-shadow: var(--glow-md), 0 4px 12px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.08);
   transform: translateY(-2px);
 }
 
@@ -680,7 +684,7 @@ body {
    ====================================================== */
 .problem {
   background-color: #FFFFFF;
-  padding: 100px 24px;
+  padding: 80px 24px 64px;
   border-top: 1px solid rgba(43, 73, 84, 0.08);
   border-bottom: 1px solid rgba(43, 73, 84, 0.08);
 }
@@ -774,7 +778,9 @@ body {
    ====================================================== */
 .solution {
   background-color: #F4F8F9;
-  padding: 100px 24px;
+  background-image: radial-gradient(circle, rgba(26, 40, 48, 0.02) 1px, transparent 1px);
+  background-size: 32px 32px;
+  padding: 120px 24px 100px;
   position: relative;
   border-top: 1px solid rgba(43, 73, 84, 0.08);
   border-bottom: 1px solid rgba(43, 73, 84, 0.08);
@@ -891,7 +897,7 @@ body {
    ====================================================== */
 .scale {
   background-color: #FFFFFF;
-  padding: 100px 24px;
+  padding: 80px 24px;
   border-top: 1px solid rgba(43, 73, 84, 0.08);
   border-bottom: 1px solid rgba(43, 73, 84, 0.08);
 }
@@ -985,7 +991,9 @@ body {
    ====================================================== */
 .features {
   background-color: #F4F8F9;
-  padding: 100px 24px;
+  background-image: radial-gradient(circle, rgba(26, 40, 48, 0.02) 1px, transparent 1px);
+  background-size: 32px 32px;
+  padding: 120px 24px 100px;
   border-top: 1px solid rgba(43, 73, 84, 0.08);
   border-bottom: 1px solid rgba(43, 73, 84, 0.08);
 }
@@ -1026,6 +1034,14 @@ body {
   transform: translateY(20px);
   transition: opacity 600ms var(--ease-default),
               transform 600ms var(--ease-default);
+}
+
+/* Featureカード stagger delay */
+.features__item:nth-child(2) {
+  transition-delay: 150ms;
+}
+.features__item:nth-child(3) {
+  transition-delay: 300ms;
 }
 
 .features__item.is-visible {
@@ -1088,7 +1104,7 @@ body {
    ====================================================== */
 .voices {
   background-color: #FFFFFF;
-  padding: 100px 24px;
+  padding: 80px 24px 64px;
   border-top: 1px solid rgba(43, 73, 84, 0.08);
   border-bottom: 1px solid rgba(43, 73, 84, 0.08);
 }
@@ -1192,7 +1208,9 @@ body {
    ====================================================== */
 .flow {
   background-color: #F4F8F9;
-  padding: 100px 24px;
+  background-image: radial-gradient(circle, rgba(26, 40, 48, 0.02) 1px, transparent 1px);
+  background-size: 32px 32px;
+  padding: 100px 24px 80px;
   border-top: 1px solid rgba(43, 73, 84, 0.08);
   border-bottom: 1px solid rgba(43, 73, 84, 0.08);
 }
