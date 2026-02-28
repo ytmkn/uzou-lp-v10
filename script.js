@@ -13,18 +13,18 @@
   /* === Canvas ネットワークグラフ設定 === */
   /* v11: particleCount 90, connectionDistance 140, 色調整 */
   const NETWORK_CONFIG = {
-    particleCount: 90,
-    connectionDistance: 140,
-    particleSpeed: 0.25,
+    particleCount: 70,         /* レビュー修正: 90 → 70 */
+    connectionDistance: 120,   /* レビュー修正: 140 → 120 */
+    particleSpeed: 0.40,       /* レビュー修正: 0.25 → 0.40 */
     particleSizeRange: [2, 5],
     highlightCount: 6,
     highlightInterval: 2500,
     colors: {
       node: 'rgba(73, 126, 146, 0.75)',
       nodeFill: 'rgba(73, 126, 146, 0.22)',
-      connection: 'rgba(73, 126, 146, 0.15)',
-      highlightNode: '#E07B5A',
-      highlightConnection: 'rgba(224, 123, 90, 0.35)',
+      connection: 'rgba(73, 126, 146, 0.20)',  /* レビュー修正: 0.15 → 0.20 */
+      highlightNode: '#CF6842',
+      highlightConnection: 'rgba(207, 104, 66, 0.35)',
     },
   };
 
@@ -38,9 +38,9 @@
     colors: {
       node: 'rgba(232, 240, 243, 0.25)',
       nodeFill: 'rgba(232, 240, 243, 0.08)',
-      connection: 'rgba(232, 240, 243, 0.06)',
-      highlightNode: '#E07B5A',
-      highlightConnection: 'rgba(224, 123, 90, 0.15)',
+      connection: 'rgba(232, 240, 243, 0.10)', /* レビュー修正: 0.06 → 0.10 */
+      highlightNode: '#CF6842',
+      highlightConnection: 'rgba(207, 104, 66, 0.15)',
     },
   };
 
@@ -191,7 +191,7 @@
         this.drawPolygon(p.x, p.y, p.size, p.sides, p.rotation);
 
         if (isHighlight) {
-          this.ctx.fillStyle = 'rgba(224, 123, 90, 0.25)';
+          this.ctx.fillStyle = 'rgba(207, 104, 66, 0.25)';
           this.ctx.strokeStyle = this.config.colors.highlightNode;
           this.ctx.lineWidth = 1.5;
         } else {

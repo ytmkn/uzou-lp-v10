@@ -11,9 +11,9 @@
   --color-brand: #497E92;
   --color-brand-dark: #3A6575;
   --color-deep: #0D2B33;
-  --color-accent: #E07B5A;
-  --color-accent-hover: #C96A4D;
-  --color-accent-active: #B85E44;
+  --color-accent: #CF6842;        /* WCAG AA準拠: 白文字とのコントラスト比 4.5:1以上 */
+  --color-accent-hover: #B85A38;  /* ホバー時 */
+  --color-accent-active: #A85030; /* アクティブ時 */
   --color-base-light: #F5F7F8;
   --color-base-teal: #E8F0F3;
   --color-white: #FFFFFF;
@@ -22,17 +22,20 @@
 
   /* ブランドカラーRGB分解 */
   --brand-rgb: 73, 126, 146;
-  --accent-rgb: 224, 123, 90;
+  --accent-rgb: 207, 104, 66;    /* RGB値更新 */
   --deep-rgb: 13, 43, 51;
 
+  /* ブランドカラー文字の暗色バリアント（小テキスト用） */
+  --color-brand-text: #3A6B7D;
+
   /* シャドウ（有彩色のみ。グレーシャドウ禁止） */
-  --shadow-cta-light: 0 8px 32px rgba(224, 123, 90, 0.25);
-  --shadow-cta-light-hover: 0 8px 48px rgba(224, 123, 90, 0.35);
-  --shadow-cta-light-active: 0 4px 24px rgba(224, 123, 90, 0.20);
-  --shadow-header-cta: 0 4px 16px rgba(224, 123, 90, 0.15);
+  --shadow-cta-light: 0 8px 32px rgba(207, 104, 66, 0.25);
+  --shadow-cta-light-hover: 0 8px 48px rgba(207, 104, 66, 0.35);
+  --shadow-cta-light-active: 0 4px 24px rgba(207, 104, 66, 0.20);
+  --shadow-header-cta: 0 4px 16px rgba(207, 104, 66, 0.15);
   --shadow-card: 0 4px 24px rgba(73, 126, 146, 0.10);
   --shadow-card-hover: 0 8px 40px rgba(73, 126, 146, 0.15);
-  --shadow-cta-dark: 0 8px 40px rgba(224, 123, 90, 0.35);
+  --shadow-cta-dark: 0 8px 40px rgba(207, 104, 66, 0.35);
   --glow-number: 0 0 60px rgba(73, 126, 146, 0.15);
 
   /* 角丸 */
@@ -47,8 +50,8 @@
   /* v3 影の追加 */
   --shadow-card-double-outer: 0 4px 24px rgba(73, 126, 146, 0.08);
   --shadow-card-double-inner: 0 2px 12px rgba(73, 126, 146, 0.06);
-  --shadow-cta-dark-v3: 0 8px 48px rgba(224, 123, 90, 0.35);
-  --shadow-cta-dark-hover-v3: 0 12px 56px rgba(224, 123, 90, 0.45);
+  --shadow-cta-dark-v3: 0 8px 48px rgba(207, 104, 66, 0.35);
+  --shadow-cta-dark-hover-v3: 0 12px 56px rgba(207, 104, 66, 0.45);
 
   /* v3 本文line-height */
   --lh-body: 2.0;
@@ -258,7 +261,7 @@ a {
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 0.01em;
-  color: rgba(26, 58, 68, 0.65);
+  color: rgba(26, 58, 68, 0.80); /* a11y修正: 0.65 → 0.80 */
   text-decoration: none;
   position: relative;
   transition: color 200ms ease-out;
@@ -570,7 +573,7 @@ a {
   font-weight: 600;
   letter-spacing: 0.12em;
   line-height: 1;
-  color: var(--color-brand);
+  color: var(--color-brand-text); /* a11y修正: 小テキスト用暗色バリアント */
   text-transform: uppercase;
 }
 
@@ -580,7 +583,7 @@ a {
   font-weight: 400;
   letter-spacing: 0.02em;
   line-height: 1;
-  color: rgba(26, 58, 68, 0.5);
+  color: rgba(26, 58, 68, 0.72); /* a11y修正: 0.5 → 0.72 */
 }
 
 /* キャッチコピー（技法指定書 4-2） */
@@ -668,7 +671,7 @@ a {
 
 .btn--primary:hover {
   background-color: var(--color-accent-hover);
-  box-shadow: 0 12px 48px rgba(224, 123, 90, 0.35); /* v3: offset-y 8→12px */
+  box-shadow: 0 12px 48px rgba(207, 104, 66, 0.35); /* v3: offset-y 8→12px */
   transform: translateY(-2px);
 }
 
@@ -988,7 +991,7 @@ a {
   font-weight: 600;
   letter-spacing: 0.15em;
   line-height: 1;
-  color: var(--color-brand);
+  color: var(--color-brand-text); /* a11y修正: 小テキスト用暗色バリアント */
   text-transform: uppercase;
   text-align: center;
   margin-bottom: 32px;
@@ -1118,7 +1121,7 @@ a {
   font-weight: 600;
   letter-spacing: 0.10em;
   line-height: 1.0;
-  color: var(--color-brand-dark);
+  color: var(--color-brand-text); /* a11y修正: 小テキスト用暗色バリアント */
   text-transform: uppercase;
   margin-bottom: 16px; /* v3: 24px → 16px */
 }
@@ -1137,7 +1140,7 @@ a {
 .noise__issue-list {
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 24px; /* レビュー修正: 28px → 24px（8の倍数スケール準拠） */
 }
 
 .noise__issue-item {
@@ -1145,7 +1148,7 @@ a {
   grid-template-columns: 24px 1fr;
   gap: 16px;
   align-items: start;
-  background: rgba(255, 255, 255, 0.65); /* v3: 0.6 → 0.65 外枠との差0.15 */
+  background: rgba(255, 255, 255, 0.72); /* レビュー修正: 0.65 → 0.72 外枠との差を強化 */
   padding: 20px;
   border-radius: 6px; /* v3: 内枠は均一角丸 */
   box-shadow: var(--shadow-card-double-inner); /* v3: 2重カード内枠影 */;
@@ -1332,8 +1335,9 @@ a {
    ========================================= */
 .proof {
   background:
-    radial-gradient(ellipse 70% 50% at 50% 50%, rgba(73,126,146,0.03) 0%, transparent 60%),
-    #FFFFFF;
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(73,126,146,0.06) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 40% at 50% 100%, rgba(73,126,146,0.04) 0%, transparent 40%),
+    #FAFCFD; /* レビュー修正: #FFFFFF → #FAFCFD 存在感強化 */
   padding: 80px 0 80px; /* v3: 100px → 80px */
   position: relative;
 }
@@ -1342,7 +1346,7 @@ a {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(circle, rgba(73, 126, 146, 0.035) 1px, transparent 1px); /* v3: 0.04 → 0.035 */
+  background-image: radial-gradient(circle, rgba(73, 126, 146, 0.05) 1px, transparent 1px); /* レビュー修正: 0.035 → 0.05 */
   background-size: 28px 28px; /* v3: 32px → 28px */
   pointer-events: none;
   z-index: 0;
@@ -1404,7 +1408,8 @@ a {
 
 /* v3: NOISE外枠カード（2重カード構造 KAGAMI技法 #7） */
 .noise__category-card {
-  background: rgba(255, 255, 255, 0.50);
+  background: rgba(255, 255, 255, 0.45); /* レビュー修正: 0.50 → 0.45 内枠との差を強化 */
+  border: 1px solid rgba(73, 126, 146, 0.06); /* レビュー修正: 外枠ボーダー追加 */
   border-radius: var(--radius-flow-left); /* 24px 6px 6px 24px 広告主=左から流れる */
   padding: 32px;
   box-shadow: var(--shadow-card-double-outer);
@@ -1494,7 +1499,7 @@ a {
   font-weight: 600;
   letter-spacing: 0.15em;
   line-height: 1.0;
-  color: #3E7585;
+  color: var(--color-brand-text); /* a11y修正: 小テキスト用暗色バリアント */
   text-transform: uppercase;
   margin-bottom: 0; /* v3: heading-rowで制御 */
 }
@@ -1550,7 +1555,7 @@ a {
   font-weight: 600;
   letter-spacing: 0.12em;
   line-height: 1.5;
-  color: #3E7585;
+  color: var(--color-brand-text); /* a11y修正: 小テキスト用暗色バリアント */
   text-transform: uppercase;
   margin-top: 16px;
 }
@@ -1674,7 +1679,7 @@ a {
   letter-spacing: -0.04em;
   line-height: 1.0;
   color: var(--color-brand);
-  opacity: 0.10; /* v3: 0.15 → 0.10 ライト背景では更に薄く */
+  opacity: 0.14; /* レビュー修正: 0.10 → 0.14 視認性強化 */
   position: absolute;
   top: -8px;
   left: -8px;
@@ -1819,7 +1824,7 @@ a {
   display: flex;
   align-items: center;
   gap: 16px;
-  padding: 24px 28px;
+  padding: 24px; /* レビュー修正: 28px → 24px（8の倍数スケール準拠） */
   border-bottom: 1px solid rgba(73, 126, 146, 0.08); /* v3: 0.06 → 0.08 */
 }
 
@@ -1876,7 +1881,7 @@ a {
 
 /* v11: カードボディ */
 .voices__card-body {
-  padding: 24px 28px 28px;
+  padding: 24px; /* レビュー修正: 28px → 24px（8の倍数スケール準拠） */
 }
 
 /* v11: SVG引用符アイコン */
@@ -2254,7 +2259,7 @@ a {
   font-size: clamp(14px, 1.5vw, 17px);
   font-weight: 400;
   letter-spacing: 0.02em;
-  line-height: 1.8;
+  line-height: var(--lh-body); /* 1.8 → 2.0に統一 */
   color: rgba(232, 240, 243, 0.85);
   opacity: 0;
   text-align: center;
@@ -2286,7 +2291,7 @@ a {
   box-shadow: var(--shadow-cta-dark-v3); /* v3: blur 40→48px */
 }
 .find-signal .btn--primary:hover {
-  box-shadow: 0 12px 56px rgba(224, 123, 90, 0.45);
+  box-shadow: 0 12px 56px rgba(207, 104, 66, 0.45);
   background: var(--color-accent-hover);
   transform: translateY(-2px);
 }
@@ -2296,14 +2301,14 @@ a {
 }
 .find-signal .btn--secondary {
   color: var(--color-text-on-dark);
-  border: 1px solid rgba(232, 240, 243, 0.30);
+  border: 1px solid rgba(232, 240, 243, 0.50); /* a11y修正: 0.30 → 0.50 */
   background: transparent;
 }
 .find-signal .btn--secondary:hover {
   border-color: var(--color-accent);
   color: var(--color-accent);
-  background: rgba(224, 123, 90, 0.06);
-  box-shadow: 0 4px 24px rgba(224, 123, 90, 0.12); /* v3追加: 副CTAにも微かなグロー */
+  background: rgba(207, 104, 66, 0.06);
+  box-shadow: 0 4px 24px rgba(207, 104, 66, 0.12); /* v3追加: 副CTAにも微かなグロー */
 }
 
 /* =========================================
@@ -2372,7 +2377,7 @@ a {
   letter-spacing: 0.01em;
   line-height: 1.0;
   color: var(--color-text-on-dark);
-  opacity: 0.70;
+  opacity: 0.80; /* レビュー修正: 0.70 → 0.80 */
   text-decoration: none;
   transition: opacity var(--duration-fast) var(--ease-hover);
   min-height: 44px;
@@ -2395,7 +2400,7 @@ a {
   font-weight: 400;
   letter-spacing: 0.02em;
   color: var(--color-text-on-dark);
-  opacity: 0.55;
+  opacity: 0.70; /* レビュー修正: 0.55 → 0.70 */
 }
 
 /* =========================================
@@ -2721,7 +2726,7 @@ a {
     transform: none;
   }
   .find-signal .btn--secondary:hover {
-    border-color: rgba(232, 240, 243, 0.30);
+    border-color: rgba(232, 240, 243, 0.50); /* a11y修正 */
     color: var(--color-text-on-dark);
     background: transparent;
   }

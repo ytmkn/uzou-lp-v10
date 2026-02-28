@@ -71,6 +71,10 @@
       <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
       <feColorMatrix type="saturate" values="0" />
     </filter>
+    <filter id="noise-light">
+      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
+      <feColorMatrix type="saturate" values="0" />
+    </filter>
     <filter id="noise-dark">
       <feTurbulence type="fractalNoise" baseFrequency="0.55" numOctaves="4" stitchTiles="stitch" />
       <feColorMatrix type="saturate" values="0" />
@@ -121,8 +125,10 @@
   </div>
 
   <!-- ヒーロー: 技法指定書 セクション1-8 準拠 / 白背景 + SVGノイズ + Canvas NetworkGraph -->
+  <!-- main要素: bodyの直接の子要素として配置（a11y修正） -->
+  <main id="main">
+
   <section class="hero" id="hero" aria-label="SIGNAL">
-    <main id="main">
 
       <!-- 背景レイヤー: SVGノイズテクスチャ（技法指定書 2-2） -->
       <div class="hero__noise" aria-hidden="true"></div>
@@ -162,14 +168,13 @@
         <canvas class="hero__canvas" id="heroCanvas"></canvas>
       </div>
 
-    </main>
   </section>
 
   <!-- TRUSTED BY: 2列ロゴマーキー（技法指定書対象外、concept-v2 + visual-sequence-v2 準拠） -->
   <section class="trusted-by" data-section="trusted-by" aria-label="導入メディア一覧">
     <p class="trusted-by__label">TRUSTED BY 500+ MEDIA</p>
     <!-- 上段マーキー: 左→右 -->
-    <div class="trusted-by__marquee">
+    <div class="trusted-by__marquee" aria-hidden="true">
       <div class="trusted-by__marquee-track trusted-by__marquee-track--left">
         <!-- 1. 新聞社ロゴ -->
         <svg class="trusted-by__logo" width="140" height="28" viewBox="0 0 140 28" fill="none" aria-label="報道メディア">
@@ -226,7 +231,7 @@
       </div>
     </div>
     <!-- 下段マーキー: 右→左（逆方向） -->
-    <div class="trusted-by__marquee trusted-by__marquee--reverse">
+    <div class="trusted-by__marquee trusted-by__marquee--reverse" aria-hidden="true">
       <div class="trusted-by__marquee-track trusted-by__marquee-track--right">
         <svg class="trusted-by__logo" width="120" height="28" viewBox="0 0 120 28" fill="none" aria-label="テックメディア"><text x="0" y="19" fill="currentColor" font-family="'SF Mono', 'Fira Code', monospace" font-size="11" font-weight="600" letter-spacing="0.06em">&lt;TECH/CRUNCH&gt;</text></svg>
         <svg class="trusted-by__logo" width="110" height="28" viewBox="0 0 110 28" fill="none" aria-label="ファッションメディア"><text x="0" y="20" fill="currentColor" font-family="Georgia, 'Times New Roman', serif" font-size="16" font-weight="400" letter-spacing="0.20em">VOGUE.jp</text></svg>
@@ -251,7 +256,7 @@
     <div class="trusted-by__transition" aria-hidden="true"></div>
   </section>
     <!-- セクション3: NOISE（課題） — 背景テクスチャ強化 -->
-    <section class="noise" data-section="noise" data-theme="light" id="noise">
+    <section class="noise" data-section="noise" data-theme="light" id="noise" aria-label="課題">
       <div class="noise__polygon-deco" aria-hidden="true">
         <svg viewBox="0 0 100 100" fill="none"><polygon points="50,10 90,40 80,85 20,85 10,40" stroke="rgba(73,126,146,0.04)" stroke-width="1" fill="rgba(73,126,146,0.015)"/></svg>
       </div>
@@ -343,7 +348,7 @@
     </section>
 
     <!-- セクション4: SIFT（核心価値） — 3層gradient強化 -->
-    <section class="sift" data-section="sift" data-theme="dark" id="sift">
+    <section class="sift" data-section="sift" data-theme="dark" id="sift" aria-label="UZOUの核心価値">
       <div class="sift__container">
         <div class="sift__heading-group">
           <div class="section-dot" aria-hidden="true"></div>
@@ -422,7 +427,7 @@
     </section>
 
     <!-- セクション5: PROOF（数値実績） — ドットパターン背景追加 -->
-    <section class="proof" data-section="proof" data-theme="light" id="proof">
+    <section class="proof" data-section="proof" data-theme="light" id="proof" aria-label="数値実績">
       <!-- 装飾ポリゴン -->
       <div class="proof__polygon-deco" aria-hidden="true">
         <svg viewBox="0 0 120 120" fill="none">
@@ -470,7 +475,7 @@
     </section>
 
     <!-- セクション6: THREE SIGNALS（機能） — SVGイラスト全面差し替え -->
-    <section class="three-signals" data-section="three-signals" id="three-signals">
+    <section class="three-signals" data-section="three-signals" id="three-signals" aria-label="3つの特徴">
       <!-- 装飾ポリゴン -->
       <div class="three-signals__polygon-deco three-signals__polygon-deco--1" aria-hidden="true">
         <svg viewBox="0 0 80 80" fill="none">
@@ -850,7 +855,7 @@
     </section>
 
     <!-- セクション8: FLOW（導入フロー + FAQ） — 縦型タイムラインに全面改修 -->
-    <section class="flow" data-section="flow" data-theme="light" id="flow">
+    <section class="flow" data-section="flow" data-theme="light" id="flow" aria-label="導入の流れとよくある質問">
       <!-- 装飾ポリゴン -->
       <div class="flow__polygon-deco" aria-hidden="true">
         <svg viewBox="0 0 100 100" fill="none">
@@ -993,7 +998,7 @@
     </section>
 
     <!-- セクション9: FIND YOUR SIGNAL（最終CTA） — 3層gradient強化 -->
-    <section class="find-signal" data-section="find-signal" data-theme="dark" id="find-signal">
+    <section class="find-signal" data-section="find-signal" data-theme="dark" id="find-signal" aria-label="お問い合わせ">
       <canvas class="find-signal__canvas" aria-hidden="true"></canvas>
       <div class="find-signal__glow" aria-hidden="true"></div>
       <div class="find-signal__container">
