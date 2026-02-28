@@ -525,6 +525,9 @@ a {
   width: 100%;
   max-width: 560px;
   aspect-ratio: 4 / 3;
+  height: auto;
+  /* Canvas要素はreplaced elementのため、
+     flex内でaspect-ratioを効かせるにはheight: autoが必要 */
 }
 
 /* ブランドラベル（技法指定書 4-1） */

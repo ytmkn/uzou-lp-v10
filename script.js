@@ -16,15 +16,15 @@
     particleCount: 90,
     connectionDistance: 140,
     particleSpeed: 0.25,
-    particleSizeRange: [1.5, 4],
+    particleSizeRange: [2, 5],
     highlightCount: 6,
     highlightInterval: 2500,
     colors: {
-      node: 'rgba(73, 126, 146, 0.60)',
-      nodeFill: 'rgba(73, 126, 146, 0.15)',
-      connection: 'rgba(73, 126, 146, 0.10)',
+      node: 'rgba(73, 126, 146, 0.75)',
+      nodeFill: 'rgba(73, 126, 146, 0.22)',
+      connection: 'rgba(73, 126, 146, 0.15)',
       highlightNode: '#E07B5A',
-      highlightConnection: 'rgba(224, 123, 90, 0.30)',
+      highlightConnection: 'rgba(224, 123, 90, 0.35)',
     },
   };
 
