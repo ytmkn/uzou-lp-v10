@@ -616,6 +616,7 @@
     }
 
     /* fadeInUp アニメーション（FIND YOUR SIGNAL） */
+    /* 専用config: 画面下部のセクションなので閾値を下げ、rootMarginをゼロにする */
     const fadeElements = document.querySelectorAll('.find-signal__heading, .find-signal__subcopy, .find-signal__cta-group');
     if (fadeElements.length > 0) {
       const fadeObserver = new IntersectionObserver((entries) => {
@@ -625,8 +626,17 @@
             fadeObserver.unobserve(entry.target);
           }
         });
-      }, OBSERVER_CONFIG);
+      }, { threshold: 0.05, rootMargin: '0px 0px 0px 0px' }); /* a11y修正: 画面下部でも確実に発火する閾値 */
       fadeElements.forEach((el) => fadeObserver.observe(el));
+
+      /* フォールバック: 5秒後にまだopacity:0のままなら強制表示 */
+      setTimeout(() => {
+        fadeElements.forEach((el) => {
+          if (!el.classList.contains('is-visible')) {
+            el.classList.add('is-visible');
+          }
+        });
+      }, 5000);
     }
   }
 

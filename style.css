@@ -48,7 +48,7 @@
   --radius-flow-left: 24px 6px 6px 24px;
 
   /* v3 影の追加 */
-  --shadow-card-double-outer: 0 4px 24px rgba(73, 126, 146, 0.12); /* レビュー修正: 0.08 → 0.12 NOISEカード影強化 */
+  --shadow-card-double-outer: 0 4px 24px rgba(73, 126, 146, 0.18); /* レビュー修正: 0.12 → 0.18 NOISEカード影強化 */
   --shadow-card-double-inner: 0 2px 12px rgba(73, 126, 146, 0.06);
   --shadow-cta-dark-v3: 0 8px 48px rgba(184, 90, 56, 0.35);
   --shadow-cta-dark-hover-v3: 0 12px 56px rgba(184, 90, 56, 0.45);
@@ -137,7 +137,7 @@ a {
 
 /* :focus-visible（技法指定書 セクション12） */
 :focus-visible {
-  outline: 2px solid rgba(73, 126, 146, 0.6);
+  outline: 2px solid #497E92; /* a11y修正: 不透明色で3:1以上確保 */
   outline-offset: 2px;
 }
 
@@ -215,7 +215,7 @@ a {
   color: var(--color-text-on-dark);
 }
 .header--dark .header__nav-link {
-  color: rgba(232, 240, 243, 0.65);
+  color: rgba(232, 240, 243, 0.90); /* a11y修正: コントラスト比向上 0.65→0.90 */
 }
 .header--dark .header__nav-link:hover {
   color: var(--color-text-on-dark);
@@ -687,7 +687,7 @@ a {
 }
 
 .btn--primary:focus-visible {
-  box-shadow: var(--shadow-cta-light), 0 0 0 3px rgba(73, 126, 146, 0.4);
+  box-shadow: var(--shadow-cta-light), 0 0 0 3px rgba(73, 126, 146, 0.7); /* a11y修正: 0.4→0.7 */
 }
 
 .btn--primary:disabled,
@@ -738,7 +738,7 @@ a {
 }
 
 .btn--secondary:focus-visible {
-  box-shadow: 0 0 0 3px rgba(73, 126, 146, 0.4);
+  box-shadow: 0 0 0 3px rgba(73, 126, 146, 0.7); /* a11y修正: 0.4→0.7 */
 }
 
 /* =========================================
@@ -1267,7 +1267,7 @@ a {
   font-weight: 400;
   letter-spacing: 0.02em;
   line-height: 2.0; /* v3: 1.8 → 2.0 */
-  color: #DDE6EA; /* a11y修正: 不透明色で視認性向上 */
+  color: #FFFFFF; /* a11y修正: コントラスト比 WCAG AA確保（#497E92上で白文字） */
   text-align: center;
   max-width: 640px;
   margin: 0 auto 80px;
@@ -1831,6 +1831,14 @@ a {
 }
 @media (prefers-reduced-motion: reduce) {
   .voices__marquee-track {
+    animation: none;
+  }
+}
+
+/* a11y修正: TRUSTED BYマーキーのprefers-reduced-motion対応 */
+@media (prefers-reduced-motion: reduce) {
+  .trusted-by__marquee-track--left,
+  .trusted-by__marquee-track--right {
     animation: none;
   }
 }
