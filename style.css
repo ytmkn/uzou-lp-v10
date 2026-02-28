@@ -89,6 +89,17 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  font-feature-settings: "palt" 1;
+  word-break: auto-phrase;
+  overflow-wrap: anywhere;
+}
+
+/* SR-only（SVGフィルター定義用） */
+.sr-only {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
 }
 
 /* テキスト選択色 */
@@ -375,6 +386,19 @@ body {
   z-index: 1;
 }
 
+/* --- 背景レイヤー: ノイズテクスチャ（hero__transition の前に配置） --- */
+.hero__circuit::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  filter: url(#noise-filter);
+  opacity: 0.035;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
 /* --- コンテンツ（z-index: 2） --- */
 .hero__content {
   position: relative;
@@ -397,6 +421,7 @@ body {
   letter-spacing: -0.025em;
   color: var(--color-signal-white);
   margin: 0;
+  text-wrap: balance;
   /* 入場アニメーション */
   opacity: 0;
   transform: translateY(20px);
@@ -707,6 +732,7 @@ body {
   letter-spacing: -0.015em;
   color: var(--color-deep-teal);
   margin: 0;
+  text-wrap: balance;
 }
 
 .problem__grid {
@@ -813,6 +839,7 @@ body {
   line-height: 1.2;
   letter-spacing: -0.015em;
   color: var(--color-deep-teal);
+  text-wrap: balance;
 }
 
 .solution__subtitle {
@@ -919,6 +946,7 @@ body {
   line-height: 1.2;
   letter-spacing: -0.015em;
   color: var(--color-deep-teal);
+  text-wrap: balance;
 }
 
 .scale__grid {
@@ -965,6 +993,7 @@ body {
   line-height: 1.0;
   letter-spacing: -0.02em;
   color: var(--color-deep-teal);
+  font-variant-numeric: tabular-nums;
 }
 
 .scale__unit {
@@ -1015,6 +1044,7 @@ body {
   line-height: 1.2;
   letter-spacing: -0.015em;
   color: var(--color-deep-teal);
+  text-wrap: balance;
 }
 
 .features__list {
@@ -1087,6 +1117,7 @@ body {
   letter-spacing: -0.01em;
   color: var(--color-deep-teal);
   margin-bottom: 16px;
+  text-wrap: balance;
 }
 
 .features__item-text {
@@ -1126,6 +1157,7 @@ body {
   line-height: 1.2;
   letter-spacing: -0.015em;
   color: var(--color-deep-teal);
+  text-wrap: balance;
 }
 
 .voices__grid {
@@ -1232,6 +1264,7 @@ body {
   line-height: 1.2;
   letter-spacing: -0.015em;
   color: var(--color-deep-teal);
+  text-wrap: balance;
 }
 
 .flow__steps {
@@ -1369,6 +1402,7 @@ body {
   line-height: 1.2;
   letter-spacing: -0.015em;
   color: var(--color-deep-teal);
+  text-wrap: balance;
 }
 
 .faq__list {
@@ -1498,6 +1532,19 @@ body {
   pointer-events: none;
 }
 
+/* ノイズテクスチャ（Final CTA） */
+.final-cta__circuit::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  filter: url(#noise-filter);
+  opacity: 0.035;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
 /* 背景: ノードレイヤー（全ノード同時パルス） */
 .final-cta__nodes {
   position: absolute;
@@ -1544,6 +1591,7 @@ body {
   line-height: 1.2;
   letter-spacing: -0.02em;
   color: var(--color-signal-white);
+  text-wrap: balance;
   /* アニメーション初期状態 */
   opacity: 0;
   transform: translateY(20px);
@@ -1803,6 +1851,102 @@ body {
     gap: 20px;
     max-width: 560px;
     margin: 0 auto;
+  }
+
+  /* Features: ギャップ縮小 + ビジュアル縮小 */
+  .features__item {
+    gap: 40px;
+  }
+
+  .features__visual svg {
+    max-width: 260px;
+  }
+
+  .features__header {
+    margin-bottom: 56px;
+  }
+
+  .features__list {
+    gap: 56px;
+  }
+
+  /* Solution: 余白調整 */
+  .solution {
+    padding: 100px 24px 80px;
+  }
+
+  .solution__descriptions {
+    gap: 24px;
+  }
+
+  /* Flow: コネクタ縮小 + ステップ間の余裕確保 */
+  .flow__connector {
+    width: 32px;
+  }
+
+  .flow__step {
+    padding: 0 8px;
+  }
+
+  /* Problem: ギャップ縮小 */
+  .problem__grid {
+    gap: 32px;
+  }
+}
+
+
+/* ======================================================
+   レスポンシブ: Tablet Portrait（768px - 899px）
+   ====================================================== */
+@media (min-width: 768px) and (max-width: 899px) {
+  /* Features: 2カラム → 1カラム（幅が狭いタブレット） */
+  .features__item {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .features__item:nth-child(even) {
+    direction: ltr;
+  }
+
+  .features__visual {
+    order: -1;
+  }
+
+  .features__visual svg {
+    max-width: 280px;
+  }
+
+  /* Flow: 縦配置に変更 */
+  .flow__steps {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .flow__step {
+    max-width: 320px;
+  }
+
+  .flow__connector {
+    width: 2px;
+    height: 24px;
+    top: auto;
+  }
+
+  .flow__connector svg {
+    width: 2px;
+    height: 100%;
+  }
+
+  /* Solution: 図解スクロール対応 */
+  .solution__diagram-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .solution__diagram {
+    min-width: 600px;
   }
 }
 
