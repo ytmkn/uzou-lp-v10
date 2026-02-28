@@ -23,8 +23,8 @@
       node: 'rgba(73, 126, 146, 0.75)',
       nodeFill: 'rgba(73, 126, 146, 0.22)',
       connection: 'rgba(73, 126, 146, 0.20)',  /* レビュー修正: 0.15 → 0.20 */
-      highlightNode: '#CF6842',
-      highlightConnection: 'rgba(207, 104, 66, 0.35)',
+      highlightNode: '#B85A38',
+      highlightConnection: 'rgba(184, 90, 56, 0.35)',
     },
   };
 
@@ -39,8 +39,8 @@
       node: 'rgba(232, 240, 243, 0.25)',
       nodeFill: 'rgba(232, 240, 243, 0.08)',
       connection: 'rgba(232, 240, 243, 0.10)', /* レビュー修正: 0.06 → 0.10 */
-      highlightNode: '#CF6842',
-      highlightConnection: 'rgba(207, 104, 66, 0.15)',
+      highlightNode: '#B85A38',
+      highlightConnection: 'rgba(184, 90, 56, 0.15)',
     },
   };
 
@@ -191,7 +191,7 @@
         this.drawPolygon(p.x, p.y, p.size, p.sides, p.rotation);
 
         if (isHighlight) {
-          this.ctx.fillStyle = 'rgba(207, 104, 66, 0.25)';
+          this.ctx.fillStyle = 'rgba(184, 90, 56, 0.25)';
           this.ctx.strokeStyle = this.config.colors.highlightNode;
           this.ctx.lineWidth = 1.5;
         } else {
