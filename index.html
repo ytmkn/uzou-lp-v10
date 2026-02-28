@@ -10,7 +10,7 @@
   <meta property="og:type" content="website">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&family=Noto+Sans+JP:wght@400;500;700&family=Plus+Jakarta+Sans:wght@300;600;700;800&family=Zen+Kaku+Gothic+New:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Plus+Jakarta+Sans:wght@300;600;700;800&family=Zen+Kaku+Gothic+New:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 
   <!-- FAQPage 構造化データ -->
@@ -519,68 +519,112 @@
                     <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
                   </filter>
                 </defs>
+                <!-- 正方形グリッド背景 -->
                 <rect width="400" height="320" fill="url(#ts-grid-1)"/>
-                <!-- データ入力ストリーム -->
-                <line x1="0" y1="60" x2="80" y2="60" stroke="#497E92" stroke-width="1" opacity="0.3" stroke-dasharray="4 3"/>
-                <line x1="0" y1="100" x2="80" y2="100" stroke="#497E92" stroke-width="1" opacity="0.25" stroke-dasharray="4 3"/>
-                <line x1="0" y1="140" x2="80" y2="140" stroke="#497E92" stroke-width="1.5" opacity="0.4" stroke-dasharray="4 3"/>
-                <line x1="0" y1="180" x2="80" y2="180" stroke="#497E92" stroke-width="1" opacity="0.2" stroke-dasharray="4 3"/>
-                <line x1="0" y1="220" x2="80" y2="220" stroke="#497E92" stroke-width="1" opacity="0.3" stroke-dasharray="4 3"/>
-                <!-- 入力ノード群 -->
-                <circle cx="90" cy="60" r="6" stroke="#497E92" stroke-width="1.5" fill="rgba(73,126,146,0.08)"/>
-                <circle cx="90" cy="100" r="6" stroke="#497E92" stroke-width="1.5" fill="rgba(73,126,146,0.08)"/>
-                <circle cx="90" cy="140" r="8" stroke="#497E92" stroke-width="1.5" fill="rgba(73,126,146,0.10)"/>
-                <circle cx="90" cy="180" r="5" stroke="#497E92" stroke-width="1" fill="rgba(73,126,146,0.06)"/>
-                <circle cx="90" cy="220" r="6" stroke="#497E92" stroke-width="1.5" fill="rgba(73,126,146,0.08)"/>
-                <!-- 中間層1 接続線 -->
-                <line x1="96" y1="60" x2="174" y2="80" stroke="#497E92" stroke-width="0.75" opacity="0.20"/>
-                <line x1="96" y1="100" x2="174" y2="80" stroke="#497E92" stroke-width="0.75" opacity="0.20"/>
-                <line x1="96" y1="100" x2="174" y2="140" stroke="#497E92" stroke-width="1" opacity="0.25"/>
-                <line x1="98" y1="140" x2="174" y2="80" stroke="#497E92" stroke-width="0.75" opacity="0.15"/>
-                <line x1="98" y1="140" x2="174" y2="140" stroke="#B5522E" stroke-width="1.5" opacity="0.35"/>
-                <line x1="98" y1="140" x2="174" y2="200" stroke="#497E92" stroke-width="1" opacity="0.20"/>
-                <line x1="96" y1="180" x2="174" y2="140" stroke="#497E92" stroke-width="0.75" opacity="0.18"/>
-                <line x1="96" y1="180" x2="174" y2="200" stroke="#497E92" stroke-width="0.75" opacity="0.20"/>
-                <line x1="96" y1="220" x2="174" y2="200" stroke="#497E92" stroke-width="0.75" opacity="0.25"/>
-                <line x1="96" y1="220" x2="174" y2="250" stroke="#497E92" stroke-width="0.75" opacity="0.18"/>
-                <!-- 中間層1ノード -->
-                <circle cx="180" cy="80" r="10" stroke="#497E92" stroke-width="1.5" fill="rgba(73,126,146,0.06)"/>
-                <circle cx="180" cy="140" r="12" stroke="#B5522E" stroke-width="1.5" fill="url(#ts-grad-accent)"/>
-                <circle cx="180" cy="200" r="10" stroke="#497E92" stroke-width="1.5" fill="rgba(73,126,146,0.06)"/>
-                <circle cx="180" cy="250" r="7" stroke="#497E92" stroke-width="1" fill="rgba(73,126,146,0.04)"/>
-                <!-- 中間層2 接続線 -->
-                <line x1="190" y1="80" x2="264" y2="100" stroke="#497E92" stroke-width="0.75" opacity="0.20"/>
-                <line x1="192" y1="140" x2="264" y2="100" stroke="#B5522E" stroke-width="1" opacity="0.25"/>
-                <line x1="192" y1="140" x2="264" y2="160" stroke="#B5522E" stroke-width="1.5" opacity="0.35"/>
-                <line x1="192" y1="140" x2="264" y2="220" stroke="#497E92" stroke-width="0.75" opacity="0.18"/>
-                <line x1="190" y1="200" x2="264" y2="160" stroke="#497E92" stroke-width="0.75" opacity="0.20"/>
-                <line x1="190" y1="200" x2="264" y2="220" stroke="#497E92" stroke-width="0.75" opacity="0.22"/>
-                <line x1="187" y1="250" x2="264" y2="220" stroke="#497E92" stroke-width="0.75" opacity="0.15"/>
-                <!-- 中間層2ノード -->
-                <circle cx="270" cy="100" r="9" stroke="#497E92" stroke-width="1.5" fill="rgba(73,126,146,0.06)"/>
-                <circle cx="270" cy="160" r="14" stroke="#B5522E" stroke-width="2" fill="url(#ts-grad-accent)" filter="url(#ts-glow-1)"/>
-                <circle cx="270" cy="220" r="8" stroke="#497E92" stroke-width="1" fill="rgba(73,126,146,0.05)"/>
-                <!-- 出力接続 -->
-                <line x1="284" y1="160" x2="344" y2="140" stroke="#B5522E" stroke-width="2" opacity="0.4"/>
-                <line x1="279" y1="100" x2="344" y2="140" stroke="#497E92" stroke-width="0.75" opacity="0.20"/>
-                <line x1="278" y1="220" x2="344" y2="140" stroke="#497E92" stroke-width="0.75" opacity="0.15"/>
+
+                <!-- === STAGE 1: DATA IN === -->
+                <!-- データ入力ストリーム（7本に増量） -->
+                <line x1="0" y1="40" x2="55" y2="40" stroke="#497E92" stroke-width="1" opacity="0.25" stroke-dasharray="4 3"/>
+                <line x1="0" y1="75" x2="55" y2="75" stroke="#497E92" stroke-width="1" opacity="0.3" stroke-dasharray="4 3"/>
+                <line x1="0" y1="110" x2="55" y2="110" stroke="#497E92" stroke-width="1.5" opacity="0.4" stroke-dasharray="4 3"/>
+                <line x1="0" y1="145" x2="55" y2="145" stroke="#497E92" stroke-width="1" opacity="0.35" stroke-dasharray="4 3"/>
+                <line x1="0" y1="180" x2="55" y2="180" stroke="#497E92" stroke-width="1" opacity="0.2" stroke-dasharray="4 3"/>
+                <line x1="0" y1="215" x2="55" y2="215" stroke="#497E92" stroke-width="1" opacity="0.3" stroke-dasharray="4 3"/>
+                <line x1="0" y1="250" x2="55" y2="250" stroke="#497E92" stroke-width="1" opacity="0.2" stroke-dasharray="4 3"/>
+                <!-- 入力ノード群（7個） -->
+                <circle cx="65" cy="40" r="5" stroke="#497E92" stroke-width="1" fill="rgba(73,126,146,0.06)"/>
+                <circle cx="65" cy="75" r="6" stroke="#497E92" stroke-width="1.5" fill="rgba(73,126,146,0.08)"/>
+                <circle cx="65" cy="110" r="7" stroke="#497E92" stroke-width="1.5" fill="rgba(73,126,146,0.10)"/>
+                <circle cx="65" cy="145" r="8" stroke="#497E92" stroke-width="1.5" fill="rgba(73,126,146,0.10)"/>
+                <circle cx="65" cy="180" r="5" stroke="#497E92" stroke-width="1" fill="rgba(73,126,146,0.06)"/>
+                <circle cx="65" cy="215" r="6" stroke="#497E92" stroke-width="1.5" fill="rgba(73,126,146,0.08)"/>
+                <circle cx="65" cy="250" r="5" stroke="#497E92" stroke-width="1" fill="rgba(73,126,146,0.06)"/>
+
+                <!-- === STAGE 2: ANALYSIS（中間層1 → 中間層2 → 中間層3） === -->
+                <!-- 入力 → 中間層1 接続線 -->
+                <line x1="72" y1="40" x2="128" y2="60" stroke="#497E92" stroke-width="0.5" opacity="0.15"/>
+                <line x1="72" y1="75" x2="128" y2="60" stroke="#497E92" stroke-width="0.5" opacity="0.15"/>
+                <line x1="72" y1="75" x2="128" y2="110" stroke="#497E92" stroke-width="0.75" opacity="0.20"/>
+                <line x1="72" y1="110" x2="128" y2="60" stroke="#497E92" stroke-width="0.5" opacity="0.12"/>
+                <line x1="73" y1="110" x2="128" y2="110" stroke="#497E92" stroke-width="1" opacity="0.25"/>
+                <line x1="73" y1="110" x2="128" y2="160" stroke="#497E92" stroke-width="0.75" opacity="0.18"/>
+                <line x1="73" y1="145" x2="128" y2="110" stroke="#B5522E" stroke-width="1.5" opacity="0.30"/>
+                <line x1="73" y1="145" x2="128" y2="160" stroke="#497E92" stroke-width="0.75" opacity="0.20"/>
+                <line x1="73" y1="145" x2="128" y2="210" stroke="#497E92" stroke-width="0.5" opacity="0.15"/>
+                <line x1="72" y1="180" x2="128" y2="160" stroke="#497E92" stroke-width="0.5" opacity="0.15"/>
+                <line x1="72" y1="180" x2="128" y2="210" stroke="#497E92" stroke-width="0.75" opacity="0.18"/>
+                <line x1="72" y1="215" x2="128" y2="210" stroke="#497E92" stroke-width="0.5" opacity="0.18"/>
+                <line x1="72" y1="215" x2="128" y2="250" stroke="#497E92" stroke-width="0.5" opacity="0.12"/>
+                <line x1="72" y1="250" x2="128" y2="250" stroke="#497E92" stroke-width="0.5" opacity="0.15"/>
+                <!-- 中間層1ノード（5個） -->
+                <circle cx="135" cy="60" r="8" stroke="#497E92" stroke-width="1.5" fill="rgba(73,126,146,0.06)"/>
+                <circle cx="135" cy="110" r="10" stroke="#B5522E" stroke-width="1.5" fill="url(#ts-grad-accent)"/>
+                <circle cx="135" cy="160" r="9" stroke="#497E92" stroke-width="1.5" fill="rgba(73,126,146,0.06)"/>
+                <circle cx="135" cy="210" r="7" stroke="#497E92" stroke-width="1" fill="rgba(73,126,146,0.04)"/>
+                <circle cx="135" cy="250" r="6" stroke="#497E92" stroke-width="1" fill="rgba(73,126,146,0.04)"/>
+
+                <!-- 中間層1 → 中間層2 接続線 -->
+                <line x1="145" y1="60" x2="198" y2="80" stroke="#497E92" stroke-width="0.5" opacity="0.18"/>
+                <line x1="145" y1="60" x2="198" y2="140" stroke="#497E92" stroke-width="0.5" opacity="0.12"/>
+                <line x1="145" y1="110" x2="198" y2="80" stroke="#B5522E" stroke-width="1" opacity="0.25"/>
+                <line x1="145" y1="110" x2="198" y2="140" stroke="#B5522E" stroke-width="1.5" opacity="0.35"/>
+                <line x1="145" y1="110" x2="198" y2="200" stroke="#497E92" stroke-width="0.5" opacity="0.15"/>
+                <line x1="145" y1="160" x2="198" y2="140" stroke="#497E92" stroke-width="0.75" opacity="0.20"/>
+                <line x1="145" y1="160" x2="198" y2="200" stroke="#497E92" stroke-width="0.75" opacity="0.20"/>
+                <line x1="142" y1="210" x2="198" y2="200" stroke="#497E92" stroke-width="0.5" opacity="0.18"/>
+                <line x1="142" y1="210" x2="198" y2="240" stroke="#497E92" stroke-width="0.5" opacity="0.12"/>
+                <line x1="141" y1="250" x2="198" y2="240" stroke="#497E92" stroke-width="0.5" opacity="0.15"/>
+                <!-- 中間層2ノード（4個） -->
+                <circle cx="205" cy="80" r="9" stroke="#497E92" stroke-width="1.5" fill="rgba(73,126,146,0.06)"/>
+                <circle cx="205" cy="140" r="13" stroke="#B5522E" stroke-width="2" fill="url(#ts-grad-accent)"/>
+                <circle cx="205" cy="200" r="8" stroke="#497E92" stroke-width="1" fill="rgba(73,126,146,0.05)"/>
+                <circle cx="205" cy="240" r="6" stroke="#497E92" stroke-width="1" fill="rgba(73,126,146,0.04)"/>
+
+                <!-- 中間層2 → 中間層3 接続線 -->
+                <line x1="214" y1="80" x2="268" y2="100" stroke="#497E92" stroke-width="0.5" opacity="0.18"/>
+                <line x1="218" y1="140" x2="268" y2="100" stroke="#B5522E" stroke-width="1" opacity="0.25"/>
+                <line x1="218" y1="140" x2="268" y2="160" stroke="#B5522E" stroke-width="2" opacity="0.40"/>
+                <line x1="218" y1="140" x2="268" y2="220" stroke="#497E92" stroke-width="0.5" opacity="0.15"/>
+                <line x1="213" y1="200" x2="268" y2="160" stroke="#497E92" stroke-width="0.5" opacity="0.18"/>
+                <line x1="213" y1="200" x2="268" y2="220" stroke="#497E92" stroke-width="0.75" opacity="0.20"/>
+                <line x1="211" y1="240" x2="268" y2="220" stroke="#497E92" stroke-width="0.5" opacity="0.12"/>
+                <!-- 中間層3ノード（3個） -->
+                <circle cx="275" cy="100" r="8" stroke="#497E92" stroke-width="1.5" fill="rgba(73,126,146,0.06)"/>
+                <circle cx="275" cy="160" r="15" stroke="#B5522E" stroke-width="2" fill="url(#ts-grad-accent)" filter="url(#ts-glow-1)"/>
+                <circle cx="275" cy="220" r="7" stroke="#497E92" stroke-width="1" fill="rgba(73,126,146,0.04)"/>
+
+                <!-- === STAGE 3: SIGNAL（出力） === -->
+                <!-- 中間層3 → 出力 接続 -->
+                <line x1="290" y1="160" x2="340" y2="145" stroke="#B5522E" stroke-width="2" opacity="0.45"/>
+                <line x1="283" y1="100" x2="340" y2="145" stroke="#497E92" stroke-width="0.75" opacity="0.20"/>
+                <line x1="282" y1="220" x2="340" y2="145" stroke="#497E92" stroke-width="0.5" opacity="0.15"/>
                 <!-- 出力ノード: SIGNAL -->
-                <circle cx="350" cy="140" r="20" stroke="#B5522E" stroke-width="2" fill="url(#ts-grad-accent)" filter="url(#ts-glow-1)"/>
-                <circle cx="350" cy="140" r="28" stroke="rgba(181,82,46,0.12)" stroke-width="1" fill="none"/>
-                <line x1="370" y1="140" x2="400" y2="140" stroke="#B5522E" stroke-width="2" opacity="0.4" stroke-dasharray="4 3"/>
+                <circle cx="350" cy="145" r="22" stroke="#B5522E" stroke-width="2" fill="url(#ts-grad-accent)" filter="url(#ts-glow-1)"/>
+                <circle cx="350" cy="145" r="30" stroke="rgba(181,82,46,0.12)" stroke-width="1" fill="none"/>
+                <circle cx="350" cy="145" r="38" stroke="rgba(181,82,46,0.06)" stroke-width="0.5" fill="none"/>
+                <line x1="372" y1="145" x2="400" y2="145" stroke="#B5522E" stroke-width="2" opacity="0.4" stroke-dasharray="4 3"/>
+
                 <!-- パルスアニメーション -->
                 <circle r="3" fill="#B5522E" opacity="0.8">
-                  <animateMotion dur="2.5s" repeatCount="indefinite" path="M90,140 L180,140 L270,160 L350,140"/>
-                  <animate attributeName="opacity" values="0;0.9;0.9;0" dur="2.5s" repeatCount="indefinite"/>
+                  <animateMotion dur="3s" repeatCount="indefinite" path="M65,145 L135,110 L205,140 L275,160 L350,145"/>
+                  <animate attributeName="opacity" values="0;0.9;0.9;0" dur="3s" repeatCount="indefinite"/>
                 </circle>
                 <circle r="2" fill="#497E92" opacity="0.6">
-                  <animateMotion dur="3s" repeatCount="indefinite" path="M90,60 L180,80 L270,100 L350,140" begin="0.8s"/>
-                  <animate attributeName="opacity" values="0;0.6;0.6;0" dur="3s" repeatCount="indefinite" begin="0.8s"/>
+                  <animateMotion dur="3.5s" repeatCount="indefinite" path="M65,75 L135,60 L205,80 L275,100 L350,145" begin="0.8s"/>
+                  <animate attributeName="opacity" values="0;0.6;0.6;0" dur="3.5s" repeatCount="indefinite" begin="0.8s"/>
                 </circle>
-                <!-- ラベル -->
-                <text x="45" y="268" fill="#497E92" font-size="9" font-family="'Plus Jakarta Sans', sans-serif" font-weight="600" letter-spacing="0.10em" opacity="0.4">DATA IN</text>
-                <text x="160" y="290" fill="#497E92" font-size="9" font-family="'Plus Jakarta Sans', sans-serif" font-weight="600" letter-spacing="0.10em" opacity="0.4">ANALYSIS</text>
-                <text x="330" y="185" fill="#B5522E" font-size="9" font-family="'Plus Jakarta Sans', sans-serif" font-weight="700" letter-spacing="0.10em" opacity="0.7">SIGNAL</text>
+                <circle r="2" fill="#497E92" opacity="0.5">
+                  <animateMotion dur="4s" repeatCount="indefinite" path="M65,215 L135,210 L205,200 L275,220 L350,145" begin="1.5s"/>
+                  <animate attributeName="opacity" values="0;0.5;0.5;0" dur="4s" repeatCount="indefinite" begin="1.5s"/>
+                </circle>
+
+                <!-- ステージラベル -->
+                <text x="30" y="285" fill="#497E92" font-size="9" font-family="'Plus Jakarta Sans', sans-serif" font-weight="600" letter-spacing="0.10em" opacity="0.4">DATA IN</text>
+                <text x="170" y="285" fill="#497E92" font-size="9" font-family="'Plus Jakarta Sans', sans-serif" font-weight="600" letter-spacing="0.10em" opacity="0.4">ANALYSIS</text>
+                <text x="330" y="200" fill="#B5522E" font-size="9" font-family="'Plus Jakarta Sans', sans-serif" font-weight="700" letter-spacing="0.10em" opacity="0.7">SIGNAL</text>
+                <!-- ステージ区切り（縦の薄い破線） -->
+                <line x1="100" y1="20" x2="100" y2="275" stroke="#497E92" stroke-width="0.5" opacity="0.06" stroke-dasharray="3 5"/>
+                <line x1="310" y1="20" x2="310" y2="275" stroke="#B5522E" stroke-width="0.5" opacity="0.06" stroke-dasharray="3 5"/>
               </svg>
             </div>
           </div>
@@ -603,64 +647,104 @@
                     <feGaussianBlur stdDeviation="3" result="blur"/>
                     <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
                   </filter>
+                  <!-- 同心円パターン背景 -->
+                  <pattern id="ts-concentric" width="400" height="320" patternUnits="userSpaceOnUse">
+                    <circle cx="200" cy="160" r="30" stroke="rgba(73,126,146,0.04)" stroke-width="0.5" fill="none"/>
+                    <circle cx="200" cy="160" r="60" stroke="rgba(73,126,146,0.04)" stroke-width="0.5" fill="none"/>
+                    <circle cx="200" cy="160" r="90" stroke="rgba(73,126,146,0.03)" stroke-width="0.5" fill="none"/>
+                    <circle cx="200" cy="160" r="120" stroke="rgba(73,126,146,0.03)" stroke-width="0.5" fill="none"/>
+                    <circle cx="200" cy="160" r="150" stroke="rgba(73,126,146,0.02)" stroke-width="0.5" fill="none"/>
+                    <circle cx="200" cy="160" r="180" stroke="rgba(73,126,146,0.02)" stroke-width="0.5" fill="none"/>
+                  </pattern>
                 </defs>
-                <!-- 軌道リング (3重) -->
-                <ellipse cx="200" cy="160" rx="80" ry="80" stroke="rgba(73,126,146,0.08)" stroke-width="0.75" fill="none"/>
-                <ellipse cx="200" cy="160" rx="130" ry="130" stroke="rgba(73,126,146,0.06)" stroke-width="0.75" fill="none" stroke-dasharray="3 5"/>
-                <ellipse cx="200" cy="160" rx="175" ry="145" stroke="rgba(73,126,146,0.04)" stroke-width="0.5" fill="none" stroke-dasharray="2 6"/>
-                <!-- 接続線 -->
-                <line x1="200" y1="160" x2="80" y2="45" stroke="#497E92" stroke-width="0.75" opacity="0.15"/>
-                <line x1="200" y1="160" x2="320" y2="40" stroke="#497E92" stroke-width="0.75" opacity="0.15"/>
-                <line x1="200" y1="160" x2="50" y2="160" stroke="#497E92" stroke-width="0.75" opacity="0.12"/>
-                <line x1="200" y1="160" x2="355" y2="130" stroke="#497E92" stroke-width="1" opacity="0.18"/>
-                <line x1="200" y1="160" x2="90" y2="270" stroke="#497E92" stroke-width="0.75" opacity="0.15"/>
-                <line x1="200" y1="160" x2="310" y2="270" stroke="#497E92" stroke-width="1" opacity="0.18"/>
-                <line x1="200" y1="160" x2="370" y2="220" stroke="#497E92" stroke-width="0.75" opacity="0.12"/>
-                <line x1="200" y1="160" x2="40" y2="100" stroke="#497E92" stroke-width="0.75" opacity="0.10"/>
-                <line x1="200" y1="160" x2="160" y2="30" stroke="#497E92" stroke-width="0.75" opacity="0.12"/>
-                <line x1="200" y1="160" x2="260" y2="300" stroke="#497E92" stroke-width="0.75" opacity="0.12"/>
-                <line x1="200" y1="160" x2="340" y2="80" stroke="#497E92" stroke-width="0.75" opacity="0.15"/>
-                <line x1="200" y1="160" x2="30" y2="220" stroke="#497E92" stroke-width="0.75" opacity="0.10"/>
-                <!-- 外縁ノード群 -->
-                <circle cx="80" cy="45" r="8" stroke="#497E92" stroke-width="1.5" fill="rgba(73,126,146,0.08)"/>
-                <circle cx="320" cy="40" r="10" stroke="#497E92" stroke-width="1.5" fill="rgba(73,126,146,0.08)"/>
-                <circle cx="50" cy="160" r="6" stroke="#497E92" stroke-width="1" fill="rgba(73,126,146,0.05)"/>
-                <circle cx="355" cy="130" r="9" stroke="#497E92" stroke-width="1.5" fill="rgba(73,126,146,0.08)"/>
-                <circle cx="90" cy="270" r="7" stroke="#497E92" stroke-width="1" fill="rgba(73,126,146,0.06)"/>
-                <circle cx="310" cy="270" r="11" stroke="#497E92" stroke-width="1.5" fill="rgba(73,126,146,0.08)"/>
-                <circle cx="370" cy="220" r="5" stroke="#497E92" stroke-width="1" fill="rgba(73,126,146,0.04)"/>
-                <circle cx="40" cy="100" r="5" stroke="#497E92" stroke-width="1" fill="rgba(73,126,146,0.04)"/>
-                <circle cx="160" cy="30" r="7" stroke="#497E92" stroke-width="1" fill="rgba(73,126,146,0.06)"/>
-                <circle cx="260" cy="300" r="6" stroke="#497E92" stroke-width="1" fill="rgba(73,126,146,0.05)"/>
-                <circle cx="340" cy="80" r="8" stroke="#497E92" stroke-width="1.5" fill="rgba(73,126,146,0.06)"/>
-                <circle cx="30" cy="220" r="4" stroke="#497E92" stroke-width="0.75" fill="rgba(73,126,146,0.03)"/>
-                <!-- 微小ドット -->
-                <circle cx="120" cy="80" r="2" fill="#497E92" opacity="0.15"/>
-                <circle cx="280" cy="90" r="2.5" fill="#497E92" opacity="0.12"/>
-                <circle cx="140" cy="230" r="2" fill="#497E92" opacity="0.10"/>
-                <circle cx="300" cy="200" r="1.5" fill="#497E92" opacity="0.10"/>
-                <circle cx="230" cy="50" r="2" fill="#497E92" opacity="0.12"/>
-                <circle cx="170" cy="280" r="1.5" fill="#497E92" opacity="0.08"/>
-                <circle cx="350" cy="170" r="1.5" fill="#497E92" opacity="0.08"/>
-                <circle cx="60" cy="200" r="2" fill="#497E92" opacity="0.10"/>
+                <!-- 同心円背景 -->
+                <rect width="400" height="320" fill="url(#ts-concentric)"/>
+
+                <!-- 放射線（中心から外へ） -->
+                <line x1="200" y1="160" x2="60" y2="30" stroke="#497E92" stroke-width="0.5" opacity="0.06"/>
+                <line x1="200" y1="160" x2="340" y2="30" stroke="#497E92" stroke-width="0.5" opacity="0.06"/>
+                <line x1="200" y1="160" x2="20" y2="160" stroke="#497E92" stroke-width="0.5" opacity="0.06"/>
+                <line x1="200" y1="160" x2="380" y2="160" stroke="#497E92" stroke-width="0.5" opacity="0.06"/>
+                <line x1="200" y1="160" x2="60" y2="290" stroke="#497E92" stroke-width="0.5" opacity="0.06"/>
+                <line x1="200" y1="160" x2="340" y2="290" stroke="#497E92" stroke-width="0.5" opacity="0.06"/>
+                <line x1="200" y1="160" x2="200" y2="10" stroke="#497E92" stroke-width="0.5" opacity="0.06"/>
+                <line x1="200" y1="160" x2="200" y2="310" stroke="#497E92" stroke-width="0.5" opacity="0.06"/>
+
+                <!-- リング1 ドット群（密度高） -->
+                <circle cx="200" cy="120" r="3" fill="#497E92" opacity="0.30"/>
+                <circle cx="230" cy="125" r="2.5" fill="#497E92" opacity="0.25"/>
+                <circle cx="170" cy="130" r="3" fill="#497E92" opacity="0.28"/>
+                <circle cx="240" cy="155" r="2.5" fill="#497E92" opacity="0.25"/>
+                <circle cx="160" cy="155" r="2.5" fill="#497E92" opacity="0.22"/>
+                <circle cx="200" cy="200" r="3" fill="#497E92" opacity="0.30"/>
+                <circle cx="220" cy="190" r="2" fill="#497E92" opacity="0.20"/>
+                <circle cx="180" cy="185" r="2.5" fill="#497E92" opacity="0.25"/>
+
+                <!-- リング2 ドット群 -->
+                <circle cx="130" cy="95" r="4" fill="#497E92" opacity="0.20"/>
+                <circle cx="270" cy="95" r="3.5" fill="#497E92" opacity="0.18"/>
+                <circle cx="280" cy="195" r="3.5" fill="#497E92" opacity="0.18"/>
+                <circle cx="120" cy="200" r="3" fill="#497E92" opacity="0.15"/>
+                <circle cx="140" cy="140" r="3" fill="#497E92" opacity="0.18"/>
+                <circle cx="260" cy="140" r="3.5" fill="#497E92" opacity="0.20"/>
+                <circle cx="200" cy="85" r="3.5" fill="#497E92" opacity="0.20"/>
+                <circle cx="200" cy="235" r="3" fill="#497E92" opacity="0.18"/>
+                <circle cx="155" cy="105" r="2.5" fill="#497E92" opacity="0.15"/>
+                <circle cx="245" cy="110" r="3" fill="#497E92" opacity="0.18"/>
+                <circle cx="250" cy="210" r="2.5" fill="#497E92" opacity="0.15"/>
+                <circle cx="150" cy="215" r="2.5" fill="#497E92" opacity="0.15"/>
+
+                <!-- リング3 ドット群（疎） -->
+                <circle cx="80" cy="55" r="4" fill="#497E92" opacity="0.12"/>
+                <circle cx="320" cy="55" r="5" fill="#497E92" opacity="0.14"/>
+                <circle cx="340" cy="140" r="4" fill="#497E92" opacity="0.12"/>
+                <circle cx="60" cy="160" r="3.5" fill="#497E92" opacity="0.10"/>
+                <circle cx="90" cy="260" r="4" fill="#497E92" opacity="0.12"/>
+                <circle cx="310" cy="260" r="4.5" fill="#497E92" opacity="0.14"/>
+                <circle cx="100" cy="110" r="3" fill="#497E92" opacity="0.10"/>
+                <circle cx="300" cy="110" r="3.5" fill="#497E92" opacity="0.12"/>
+                <circle cx="300" cy="230" r="3" fill="#497E92" opacity="0.10"/>
+                <circle cx="100" cy="230" r="3" fill="#497E92" opacity="0.10"/>
+
+                <!-- リング4 最外縁ドット（最も疎） -->
+                <circle cx="45" cy="35" r="3" fill="#497E92" opacity="0.08"/>
+                <circle cx="355" cy="35" r="3.5" fill="#497E92" opacity="0.08"/>
+                <circle cx="380" cy="160" r="3" fill="#497E92" opacity="0.06"/>
+                <circle cx="20" cy="160" r="2.5" fill="#497E92" opacity="0.06"/>
+                <circle cx="55" cy="285" r="3" fill="#497E92" opacity="0.08"/>
+                <circle cx="345" cy="285" r="3" fill="#497E92" opacity="0.08"/>
+                <circle cx="200" cy="20" r="3" fill="#497E92" opacity="0.08"/>
+                <circle cx="200" cy="300" r="2.5" fill="#497E92" opacity="0.06"/>
+                <circle cx="370" cy="80" r="2" fill="#497E92" opacity="0.06"/>
+                <circle cx="30" cy="80" r="2" fill="#497E92" opacity="0.06"/>
+                <circle cx="370" cy="240" r="2" fill="#497E92" opacity="0.06"/>
+                <circle cx="30" cy="240" r="2" fill="#497E92" opacity="0.06"/>
+
                 <!-- 中央ハブ -->
                 <circle cx="200" cy="160" r="32" fill="url(#ts-hub-grad)" stroke="#B5522E" stroke-width="2" filter="url(#ts-glow-2)"/>
                 <circle cx="200" cy="160" r="42" stroke="rgba(181,82,46,0.10)" stroke-width="0.75" fill="none"/>
+                <circle cx="200" cy="160" r="52" stroke="rgba(181,82,46,0.05)" stroke-width="0.5" fill="none"/>
                 <text x="200" y="157" text-anchor="middle" fill="#B5522E" font-size="11" font-family="'Plus Jakarta Sans', sans-serif" font-weight="700" letter-spacing="0.08em">UZOU</text>
                 <text x="200" y="170" text-anchor="middle" fill="#B5522E" font-size="8" font-family="'Plus Jakarta Sans', sans-serif" font-weight="400" opacity="0.6">HUB</text>
-                <!-- パルス -->
+
+                <!-- パルス（中心から外へ拡散） -->
                 <circle r="2.5" fill="#B5522E" opacity="0.7">
-                  <animateMotion dur="2s" repeatCount="indefinite" path="M200,160 L355,130"/>
+                  <animateMotion dur="2s" repeatCount="indefinite" path="M200,160 L320,55"/>
                   <animate attributeName="opacity" values="0;0.8;0.8;0" dur="2s" repeatCount="indefinite"/>
                 </circle>
                 <circle r="2.5" fill="#B5522E" opacity="0.7">
-                  <animateMotion dur="2.5s" repeatCount="indefinite" path="M200,160 L310,270" begin="0.5s"/>
+                  <animateMotion dur="2.5s" repeatCount="indefinite" path="M200,160 L90,260" begin="0.5s"/>
                   <animate attributeName="opacity" values="0;0.8;0.8;0" dur="2.5s" repeatCount="indefinite" begin="0.5s"/>
                 </circle>
-                <circle r="2" fill="#497E92" opacity="0.5">
-                  <animateMotion dur="3s" repeatCount="indefinite" path="M80,45 L200,160" begin="1s"/>
-                  <animate attributeName="opacity" values="0;0.5;0.5;0" dur="3s" repeatCount="indefinite" begin="1s"/>
+                <circle r="2" fill="#B5522E" opacity="0.6">
+                  <animateMotion dur="2.2s" repeatCount="indefinite" path="M200,160 L340,140" begin="1s"/>
+                  <animate attributeName="opacity" values="0;0.7;0.7;0" dur="2.2s" repeatCount="indefinite" begin="1s"/>
                 </circle>
+                <circle r="2" fill="#497E92" opacity="0.5">
+                  <animateMotion dur="3s" repeatCount="indefinite" path="M80,55 L200,160" begin="1.5s"/>
+                  <animate attributeName="opacity" values="0;0.5;0.5;0" dur="3s" repeatCount="indefinite" begin="1.5s"/>
+                </circle>
+
                 <text x="200" y="310" text-anchor="middle" fill="#497E92" font-size="10" font-family="'Plus Jakarta Sans', sans-serif" font-weight="600" letter-spacing="0.12em" opacity="0.35">500+ MEDIA DIRECTLY CONNECTED</text>
               </svg>
             </div>
@@ -684,53 +768,87 @@
                     <stop offset="0%" stop-color="#B5522E" stop-opacity="0.15"/>
                     <stop offset="100%" stop-color="#B5522E" stop-opacity="0.40"/>
                   </linearGradient>
+                  <linearGradient id="ts-curve-fill" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#B5522E" stop-opacity="0.12"/>
+                    <stop offset="100%" stop-color="#B5522E" stop-opacity="0.01"/>
+                  </linearGradient>
+                  <filter id="ts-glow-3">
+                    <feGaussianBlur stdDeviation="3" result="blur"/>
+                    <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                  </filter>
                 </defs>
-                <!-- ダッシュボードフレーム -->
-                <rect x="20" y="25" width="260" height="200" rx="6" stroke="#497E92" stroke-width="1" fill="rgba(73,126,146,0.02)"/>
-                <rect x="20" y="25" width="260" height="28" rx="6" fill="rgba(73,126,146,0.04)"/>
-                <rect x="20" y="47" width="260" height="1" fill="rgba(73,126,146,0.08)"/>
-                <circle cx="35" cy="39" r="3" fill="#B5522E" opacity="0.5"/>
-                <circle cx="47" cy="39" r="3" fill="#497E92" opacity="0.3"/>
-                <circle cx="59" cy="39" r="3" fill="#497E92" opacity="0.2"/>
-                <!-- 折れ線グラフ -->
-                <polyline points="40,160 65,148 90,155 115,135 140,128 165,110 190,95 215,85 240,75 260,68" stroke="#B5522E" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
-                <polygon points="40,160 65,148 90,155 115,135 140,128 165,110 190,95 215,85 240,75 260,68 260,190 40,190" fill="url(#ts-bar-accent)" opacity="0.3"/>
-                <!-- バーチャート -->
-                <rect x="40" y="170" width="18" height="40" rx="1" fill="url(#ts-bar-grad)"/>
-                <rect x="68" y="160" width="18" height="50" rx="1" fill="url(#ts-bar-grad)"/>
-                <rect x="96" y="150" width="18" height="60" rx="1" fill="url(#ts-bar-grad)"/>
-                <rect x="124" y="138" width="18" height="72" rx="1" fill="url(#ts-bar-accent)"/>
-                <rect x="152" y="148" width="18" height="62" rx="1" fill="url(#ts-bar-grad)"/>
-                <rect x="180" y="155" width="18" height="55" rx="1" fill="url(#ts-bar-grad)"/>
-                <!-- KPIカード群 -->
-                <rect x="40" y="60" width="70" height="30" rx="3" fill="rgba(73,126,146,0.04)" stroke="rgba(73,126,146,0.10)" stroke-width="0.75"/>
-                <text x="50" y="72" fill="#497E92" font-size="7" font-family="'Plus Jakarta Sans', sans-serif" opacity="0.5">CTR</text>
-                <text x="50" y="84" fill="#B5522E" font-size="11" font-family="'Plus Jakarta Sans', sans-serif" font-weight="700">+48%</text>
-                <rect x="120" y="60" width="70" height="30" rx="3" fill="rgba(73,126,146,0.04)" stroke="rgba(73,126,146,0.10)" stroke-width="0.75"/>
-                <text x="130" y="72" fill="#497E92" font-size="7" font-family="'Plus Jakarta Sans', sans-serif" opacity="0.5">CVR</text>
-                <text x="130" y="84" fill="#497E92" font-size="11" font-family="'Plus Jakarta Sans', sans-serif" font-weight="700">2.4x</text>
-                <rect x="200" y="60" width="70" height="30" rx="3" fill="rgba(73,126,146,0.04)" stroke="rgba(73,126,146,0.10)" stroke-width="0.75"/>
-                <text x="210" y="72" fill="#497E92" font-size="7" font-family="'Plus Jakarta Sans', sans-serif" opacity="0.5">ROAS</text>
-                <text x="210" y="84" fill="#497E92" font-size="11" font-family="'Plus Jakarta Sans', sans-serif" font-weight="700">320%</text>
-                <!-- 人物 -->
-                <circle cx="335" cy="110" r="24" stroke="#497E92" stroke-width="1.5" fill="rgba(73,126,146,0.04)"/>
-                <circle cx="335" cy="105" r="8" stroke="#497E92" stroke-width="1" fill="rgba(73,126,146,0.06)"/>
-                <path d="M310,145 C310,130 360,130 360,145" stroke="#497E92" stroke-width="1" fill="rgba(73,126,146,0.03)"/>
-                <!-- 会話バブル -->
-                <rect x="290" y="55" width="90" height="28" rx="6" stroke="#B5522E" stroke-width="1" fill="rgba(181,82,46,0.04)"/>
-                <text x="335" y="73" text-anchor="middle" fill="#B5522E" font-size="8" font-family="'Plus Jakarta Sans', sans-serif" font-weight="600" opacity="0.7">OPTIMIZE</text>
-                <polygon points="320,83 330,83 325,90" fill="rgba(181,82,46,0.04)" stroke="#B5522E" stroke-width="1"/>
-                <!-- 接続破線 -->
-                <path d="M280,120 L305,115" stroke="#497E92" stroke-width="1" opacity="0.25" stroke-dasharray="3 3"/>
-                <path d="M280,170 L310,155" stroke="#497E92" stroke-width="1" opacity="0.15" stroke-dasharray="3 3"/>
-                <!-- サポートアイコン -->
-                <circle cx="330" cy="180" r="12" stroke="#497E92" stroke-width="1" fill="rgba(73,126,146,0.03)"/>
-                <text x="330" y="183" text-anchor="middle" fill="#497E92" font-size="8" opacity="0.5">24h</text>
-                <circle cx="330" cy="215" r="12" stroke="#497E92" stroke-width="1" fill="rgba(73,126,146,0.03)"/>
-                <path d="M324,215 L330,221 L338,211" stroke="#497E92" stroke-width="1.5" fill="none" opacity="0.5"/>
+                <!-- ソフトな波線背景（グリッドなし） -->
+                <path d="M0,80 Q100,60 200,80 Q300,100 400,75" stroke="rgba(73,126,146,0.04)" stroke-width="1" fill="none"/>
+                <path d="M0,140 Q100,120 200,145 Q300,170 400,135" stroke="rgba(73,126,146,0.04)" stroke-width="1" fill="none"/>
+                <path d="M0,200 Q100,185 200,205 Q300,225 400,195" stroke="rgba(73,126,146,0.03)" stroke-width="1" fill="none"/>
+                <path d="M0,260 Q100,245 200,265 Q300,280 400,255" stroke="rgba(73,126,146,0.03)" stroke-width="1" fill="none"/>
+                <path d="M0,40 Q100,25 200,42 Q300,55 400,35" stroke="rgba(73,126,146,0.03)" stroke-width="1" fill="none"/>
+
+                <!-- === 人物シルエット1（メインコンサルタント） === -->
+                <g transform="translate(80, 55)">
+                  <!-- 頭 -->
+                  <circle cx="0" cy="0" r="22" stroke="#B5522E" stroke-width="1.5" fill="rgba(181,82,46,0.04)"/>
+                  <circle cx="0" cy="-3" r="9" stroke="#B5522E" stroke-width="1" fill="rgba(181,82,46,0.06)"/>
+                  <!-- 体 -->
+                  <path d="M-22,35 C-22,20 22,20 22,35" stroke="#B5522E" stroke-width="1.5" fill="rgba(181,82,46,0.03)"/>
+                  <!-- 吹き出し -->
+                  <rect x="30" y="-30" width="100" height="35" rx="8" stroke="#B5522E" stroke-width="1" fill="rgba(181,82,46,0.04)"/>
+                  <polygon points="30,-5 38,-5 34,5" fill="rgba(181,82,46,0.04)" stroke="#B5522E" stroke-width="1"/>
+                  <text x="80" y="-16" text-anchor="middle" fill="#B5522E" font-size="8" font-family="'Plus Jakarta Sans', sans-serif" font-weight="600" opacity="0.7">OPTIMIZE</text>
+                  <text x="80" y="-4" text-anchor="middle" fill="#B5522E" font-size="7" font-family="'Plus Jakarta Sans', sans-serif" font-weight="400" opacity="0.5">PROPOSAL</text>
+                </g>
+
+                <!-- === 人物シルエット2（サポートメンバー） === -->
+                <g transform="translate(310, 70)">
+                  <circle cx="0" cy="0" r="18" stroke="#497E92" stroke-width="1" fill="rgba(73,126,146,0.04)"/>
+                  <circle cx="0" cy="-3" r="7" stroke="#497E92" stroke-width="1" fill="rgba(73,126,146,0.06)"/>
+                  <path d="M-18,30 C-18,18 18,18 18,30" stroke="#497E92" stroke-width="1" fill="rgba(73,126,146,0.02)"/>
+                  <!-- 吹き出し -->
+                  <rect x="-95" y="-25" width="80" height="28" rx="6" stroke="#497E92" stroke-width="1" fill="rgba(73,126,146,0.03)"/>
+                  <polygon points="-15,-5 -22,-5 -18,3" fill="rgba(73,126,146,0.03)" stroke="#497E92" stroke-width="1"/>
+                  <text x="-55" y="-8" text-anchor="middle" fill="#497E92" font-size="8" font-family="'Plus Jakarta Sans', sans-serif" font-weight="600" opacity="0.6">REPORT</text>
+                </g>
+
+                <!-- === 上昇曲線グラフ === -->
+                <g transform="translate(40, 140)">
+                  <!-- 軸 -->
+                  <line x1="0" y1="120" x2="320" y2="120" stroke="#497E92" stroke-width="0.75" opacity="0.15"/>
+                  <line x1="0" y1="0" x2="0" y2="120" stroke="#497E92" stroke-width="0.75" opacity="0.15"/>
+                  <!-- グリッド線（水平） -->
+                  <line x1="0" y1="30" x2="320" y2="30" stroke="#497E92" stroke-width="0.5" opacity="0.06" stroke-dasharray="3 5"/>
+                  <line x1="0" y1="60" x2="320" y2="60" stroke="#497E92" stroke-width="0.5" opacity="0.06" stroke-dasharray="3 5"/>
+                  <line x1="0" y1="90" x2="320" y2="90" stroke="#497E92" stroke-width="0.5" opacity="0.06" stroke-dasharray="3 5"/>
+                  <!-- 上昇曲線 -->
+                  <path d="M0,110 C40,108 80,100 120,88 C160,76 200,55 240,35 C270,22 300,12 320,8" stroke="#B5522E" stroke-width="2.5" fill="none" opacity="0.6" stroke-linecap="round"/>
+                  <!-- 曲線下の塗りつぶし -->
+                  <path d="M0,110 C40,108 80,100 120,88 C160,76 200,55 240,35 C270,22 300,12 320,8 L320,120 L0,120 Z" fill="url(#ts-curve-fill)"/>
+                  <!-- ドットマーカー -->
+                  <circle cx="0" cy="110" r="3" fill="#497E92" opacity="0.3"/>
+                  <circle cx="80" cy="100" r="3" fill="#497E92" opacity="0.3"/>
+                  <circle cx="160" cy="76" r="3.5" fill="#B5522E" opacity="0.4"/>
+                  <circle cx="240" cy="35" r="4" fill="#B5522E" opacity="0.5"/>
+                  <circle cx="320" cy="8" r="5" fill="#B5522E" opacity="0.6" filter="url(#ts-glow-3)"/>
+                  <!-- KPI吹き出し（最新データ点） -->
+                  <rect x="268" y="-15" width="55" height="22" rx="4" fill="rgba(181,82,46,0.08)" stroke="#B5522E" stroke-width="0.75"/>
+                  <text x="295" y="-1" text-anchor="middle" fill="#B5522E" font-size="9" font-family="'Plus Jakarta Sans', sans-serif" font-weight="700">+320%</text>
+                </g>
+
+                <!-- サポートアイコン群 -->
+                <g transform="translate(290, 180)">
+                  <circle cx="0" cy="0" r="14" stroke="#497E92" stroke-width="1" fill="rgba(73,126,146,0.03)"/>
+                  <text x="0" y="4" text-anchor="middle" fill="#497E92" font-size="9" font-family="'Plus Jakarta Sans', sans-serif" font-weight="600" opacity="0.5">24h</text>
+                </g>
+                <g transform="translate(330, 210)">
+                  <circle cx="0" cy="0" r="14" stroke="#497E92" stroke-width="1" fill="rgba(73,126,146,0.03)"/>
+                  <path d="M-5,0 L-1,5 L7,-4" stroke="#497E92" stroke-width="1.5" fill="none" opacity="0.5"/>
+                </g>
+                <!-- 接続破線（人物とグラフを繋ぐ） -->
+                <path d="M80,100 L80,145" stroke="#B5522E" stroke-width="1" opacity="0.15" stroke-dasharray="3 3"/>
+                <path d="M310,105 L310,145" stroke="#497E92" stroke-width="1" opacity="0.12" stroke-dasharray="3 3"/>
+
                 <!-- ラベル -->
-                <text x="150" y="248" text-anchor="middle" fill="#497E92" font-size="9" font-family="'Plus Jakarta Sans', sans-serif" font-weight="600" letter-spacing="0.10em" opacity="0.35">DASHBOARD</text>
-                <text x="335" y="248" text-anchor="middle" fill="#B5522E" font-size="9" font-family="'Plus Jakarta Sans', sans-serif" font-weight="600" letter-spacing="0.10em" opacity="0.5">CONSULTANT</text>
+                <text x="80" y="300" text-anchor="middle" fill="#B5522E" font-size="9" font-family="'Plus Jakarta Sans', sans-serif" font-weight="600" letter-spacing="0.10em" opacity="0.5">CONSULTANT</text>
+                <text x="310" y="300" text-anchor="middle" fill="#497E92" font-size="9" font-family="'Plus Jakarta Sans', sans-serif" font-weight="600" letter-spacing="0.10em" opacity="0.35">SUPPORT</text>
               </svg>
             </div>
           </div>
@@ -810,6 +928,47 @@
               <p class="voices__card-text">CTRが48%向上しました。自然言語処理による文脈理解が的確で、従来のバナー広告では得られなかった成果が出ています。</p>
             </div>
           </div>
+          <!-- カード4 -->
+          <div class="voices__card">
+            <div class="voices__card-header">
+              <div class="voices__card-avatar voices__card-avatar--sports" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M6 9l6-6 6 6"/><path d="M12 3v12"/><path d="M5 21h14"/><circle cx="12" cy="18" r="2" fill="currentColor" stroke="none"/>
+                  <path d="M8 21l4-3 4 3"/>
+                </svg>
+              </div>
+              <div class="voices__card-meta">
+                <p class="voices__card-company">スポーツメディア / デジタル戦略部 M.H.氏</p>
+                <p class="voices__card-result">RPM 2.8x 向上</p>
+              </div>
+            </div>
+            <div class="voices__card-body">
+              <svg class="voices__card-quote-svg" width="24" height="18" viewBox="0 0 24 18" fill="none" aria-hidden="true">
+                <path d="M0 18V10.8C0 4.32 3.84 1.08 9.6 0L10.56 2.16C7.2 3.24 5.52 5.4 5.28 8.4H9.6V18H0ZM13.44 18V10.8C13.44 4.32 17.28 1.08 23.04 0L24 2.16C20.64 3.24 18.96 5.4 18.72 8.4H23.04V18H13.44Z" fill="currentColor"/>
+              </svg>
+              <p class="voices__card-text">スポーツ記事の熱量に合わせた広告が出るようになり、読者のエンゲージメントが格段に向上。RPMも2.8倍に改善しました。</p>
+            </div>
+          </div>
+          <!-- カード5 -->
+          <div class="voices__card">
+            <div class="voices__card-header">
+              <div class="voices__card-avatar voices__card-avatar--lifestyle" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>
+                </svg>
+              </div>
+              <div class="voices__card-meta">
+                <p class="voices__card-company">ライフスタイルメディア / 月間PV 500万 / 広告マネタイズ K.T.氏</p>
+                <p class="voices__card-result">広告単価 180% 改善</p>
+              </div>
+            </div>
+            <div class="voices__card-body">
+              <svg class="voices__card-quote-svg" width="24" height="18" viewBox="0 0 24 18" fill="none" aria-hidden="true">
+                <path d="M0 18V10.8C0 4.32 3.84 1.08 9.6 0L10.56 2.16C7.2 3.24 5.52 5.4 5.28 8.4H9.6V18H0ZM13.44 18V10.8C13.44 4.32 17.28 1.08 23.04 0L24 2.16C20.64 3.24 18.96 5.4 18.72 8.4H23.04V18H13.44Z" fill="currentColor"/>
+              </svg>
+              <p class="voices__card-text">広告の質が変わりました。読者に違和感なく溶け込むネイティブ広告は、記事コンテンツの価値を高めてくれています。</p>
+            </div>
+          </div>
           <!-- 複製（無限ループ用） -->
           <div class="voices__card">
             <div class="voices__card-header">
@@ -869,6 +1028,45 @@
                 <path d="M0 18V10.8C0 4.32 3.84 1.08 9.6 0L10.56 2.16C7.2 3.24 5.52 5.4 5.28 8.4H9.6V18H0ZM13.44 18V10.8C13.44 4.32 17.28 1.08 23.04 0L24 2.16C20.64 3.24 18.96 5.4 18.72 8.4H23.04V18H13.44Z" fill="currentColor"/>
               </svg>
               <p class="voices__card-text">CTRが48%向上しました。自然言語処理による文脈理解が的確で、従来のバナー広告では得られなかった成果が出ています。</p>
+            </div>
+          </div>
+          <div class="voices__card">
+            <div class="voices__card-header">
+              <div class="voices__card-avatar voices__card-avatar--sports" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M6 9l6-6 6 6"/><path d="M12 3v12"/><path d="M5 21h14"/><circle cx="12" cy="18" r="2" fill="currentColor" stroke="none"/>
+                  <path d="M8 21l4-3 4 3"/>
+                </svg>
+              </div>
+              <div class="voices__card-meta">
+                <p class="voices__card-company">スポーツメディア / デジタル戦略部 M.H.氏</p>
+                <p class="voices__card-result">RPM 2.8x 向上</p>
+              </div>
+            </div>
+            <div class="voices__card-body">
+              <svg class="voices__card-quote-svg" width="24" height="18" viewBox="0 0 24 18" fill="none" aria-hidden="true">
+                <path d="M0 18V10.8C0 4.32 3.84 1.08 9.6 0L10.56 2.16C7.2 3.24 5.52 5.4 5.28 8.4H9.6V18H0ZM13.44 18V10.8C13.44 4.32 17.28 1.08 23.04 0L24 2.16C20.64 3.24 18.96 5.4 18.72 8.4H23.04V18H13.44Z" fill="currentColor"/>
+              </svg>
+              <p class="voices__card-text">スポーツ記事の熱量に合わせた広告が出るようになり、読者のエンゲージメントが格段に向上。RPMも2.8倍に改善しました。</p>
+            </div>
+          </div>
+          <div class="voices__card">
+            <div class="voices__card-header">
+              <div class="voices__card-avatar voices__card-avatar--lifestyle" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>
+                </svg>
+              </div>
+              <div class="voices__card-meta">
+                <p class="voices__card-company">ライフスタイルメディア / 月間PV 500万 / 広告マネタイズ K.T.氏</p>
+                <p class="voices__card-result">広告単価 180% 改善</p>
+              </div>
+            </div>
+            <div class="voices__card-body">
+              <svg class="voices__card-quote-svg" width="24" height="18" viewBox="0 0 24 18" fill="none" aria-hidden="true">
+                <path d="M0 18V10.8C0 4.32 3.84 1.08 9.6 0L10.56 2.16C7.2 3.24 5.52 5.4 5.28 8.4H9.6V18H0ZM13.44 18V10.8C13.44 4.32 17.28 1.08 23.04 0L24 2.16C20.64 3.24 18.96 5.4 18.72 8.4H23.04V18H13.44Z" fill="currentColor"/>
+              </svg>
+              <p class="voices__card-text">広告の質が変わりました。読者に違和感なく溶け込むネイティブ広告は、記事コンテンツの価値を高めてくれています。</p>
             </div>
           </div>
         </div>

@@ -67,7 +67,7 @@
   /* タイポグラフィ */
   --font-heading-en: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-heading-ja: 'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
-  --font-body-en: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body-en: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-body-ja: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
 
   /* レイアウト */
@@ -1199,6 +1199,10 @@ a {
   right: 0;
   height: 120px;
   background: linear-gradient(180deg, #F5F7F8 0%, #6A9AAB 50%, #497E92 100%); /* v3: 3色遷移 */
+  clip-path: polygon(
+    0 30%, 15% 45%, 30% 25%, 50% 40%, 70% 20%, 85% 35%, 100% 25%,
+    100% 100%, 0 100%
+  );
   z-index: 1;
 }
 
@@ -1213,6 +1217,17 @@ a {
   padding: 160px 0;
   position: relative;
   overflow: hidden;
+}
+
+.sift::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('./assets/crystal-cluster.png') center/cover no-repeat;
+  opacity: 0.04;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  z-index: 0;
 }
 
 .sift::after {
@@ -1870,6 +1885,14 @@ a {
   background: linear-gradient(135deg, #B85A38, #9B4A2E);
 }
 
+.voices__card-avatar--sports {
+  background: linear-gradient(135deg, #3A8B6E, #2D6E57);
+}
+
+.voices__card-avatar--lifestyle {
+  background: linear-gradient(135deg, #7E6B92, #5E4E6E);
+}
+
 .voices__card-meta {
   display: flex;
   flex-direction: column;
@@ -1917,11 +1940,15 @@ a {
 
 .voices__transition {
   position: absolute;
-  bottom: -64px; /* v3: -80px → -64px */
+  bottom: -100px;
   left: 0;
   right: 0;
-  height: 64px; /* v3: 80px → 64px */
+  height: 100px;
   background: linear-gradient(180deg, #E8F0F3 0%, #FFFFFF 100%);
+  clip-path: polygon(
+    0 60%, 20% 40%, 40% 55%, 60% 35%, 80% 50%, 100% 30%,
+    100% 100%, 0 100%
+  );
   z-index: 1;
 }
 
