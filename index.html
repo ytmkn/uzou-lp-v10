@@ -8,10 +8,9 @@
   <meta property="og:title" content="UZOU — ノイズの中から、シグナルを。">
   <meta property="og:description" content="500を超えるメディアと直接接続。独自AIが最適な配信先を見つけ出し、広告の成果を最大化するネイティブ広告プラットフォーム。">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="assets/crystal-cluster.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&family=Plus+Jakarta+Sans:wght@300;600;700;800&family=Zen+Kaku+Gothic+New:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&family=Noto+Sans+JP:wght@400;500;700&family=Plus+Jakarta+Sans:wght@300;600;700;800&family=Zen+Kaku+Gothic+New:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 
   <!-- FAQPage 構造化データ -->
@@ -22,10 +21,10 @@
     "mainEntity": [
       {
         "@type": "Question",
-        "name": "導入にどのくらいの期間がかかりますか？",
+        "name": "導入にどのくらい時間がかかりますか？",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "最短1週間で配信開始が可能です。タグの設置とヒアリングが完了次第、すぐに最適化配信をスタートできます。"
+          "text": "最短1週間。タグ設置とアカウント設定のみで完了します。"
         }
       },
       {
@@ -33,7 +32,7 @@
         "name": "最低出稿金額はありますか？",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "予算やニーズに応じて柔軟にご対応いたします。まずはお気軽にご相談ください。"
+          "text": "予算やニーズに合わせて柔軟に対応しています。まずはご相談ください。"
         }
       },
       {
@@ -41,15 +40,23 @@
         "name": "どのような業種に対応していますか？",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "EC、金融、不動産、人材、教育など幅広い業種でご利用いただいています。業種ごとの最適化ノウハウを蓄積しています。"
+          "text": "EC、金融、不動産、人材、教育など幅広い業種に対応しています。"
         }
       },
       {
         "@type": "Question",
-        "name": "広告の審査基準はありますか？",
+        "name": "レポートはどのくらいの頻度で共有されますか？",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "新聞社にも採用いただける高い審査基準を設けています。ブランドセーフティを重視し、広告主・メディア双方の品質を守ります。"
+          "text": "リアルタイムダッシュボードでいつでも確認可能。加えて月次の詳細レポートと改善提案を専任担当者からお届けします。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "既存の広告運用と併用できますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "はい。既存チャネルを継続しながら、UZOUを追加の配信チャネルとして活用できます。"
         }
       }
     ]
@@ -60,7 +67,7 @@
 
   <!-- SVGノイズフィルター定義（グローバル） -->
   <svg width="0" height="0" style="position: absolute;" aria-hidden="true">
-    <filter id="noise-light">
+    <filter id="noiseFilter">
       <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
       <feColorMatrix type="saturate" values="0" />
     </filter>
@@ -70,185 +77,178 @@
     </filter>
   </svg>
 
-  <!-- スキップナビゲーションリンク -->
-  <a href="#main-content" class="skip-link">メインコンテンツへスキップ</a>
+  <!-- スキップリンク（body直下） -->
+  <a href="#main" class="skip-link">メインコンテンツへ</a>
 
   <!-- スクロール進捗バー -->
   <div class="scroll-progress" aria-hidden="true"></div>
 
-  <header class="header">
-    <a href="#" class="header__logo" aria-label="UZOU トップページ">UZOU</a>
+  <!-- ヘッダー: 技法指定書 セクション6 準拠 -->
+  <header class="header" role="banner">
+    <a href="/" class="header__logo" aria-label="UZOU ホーム">
+      <span class="header__logo-text">UZOU</span>
+    </a>
     <nav class="header__nav" aria-label="メインナビゲーション">
-      <a href="#noise" class="header__nav-link">課題</a>
       <a href="#sift" class="header__nav-link">UZOUとは</a>
-      <a href="#three-signals" class="header__nav-link">機能</a>
+      <a href="#three-signals" class="header__nav-link">特徴</a>
+      <a href="#proof" class="header__nav-link">実績</a>
       <a href="#flow" class="header__nav-link">導入の流れ</a>
-      <a href="#find-signal" class="header__cta">資料をダウンロード</a>
+      <a href="#faq" class="header__nav-link">FAQ</a>
     </nav>
-    <!-- モバイルメニューボタン -->
-    <button class="header__menu-btn" aria-label="メニューを開く" aria-expanded="false">
-      <span></span><span></span><span></span>
+    <div class="header__actions">
+      <a href="#contact" class="header__cta header__cta--secondary">お問い合わせ</a>
+      <a href="#download" class="header__cta header__cta--primary">資料ダウンロード</a>
+    </div>
+    <button class="header__hamburger" aria-label="メニューを開く" aria-expanded="false">
+      <span class="header__hamburger-line"></span>
+      <span class="header__hamburger-line"></span>
     </button>
   </header>
 
   <!-- モバイルメニューオーバーレイ -->
-  <div class="mobile-menu" role="dialog" aria-label="モバイルメニュー" aria-hidden="true">
+  <div class="mobile-menu" id="mobile-menu" role="dialog" aria-label="モバイルメニュー" aria-hidden="true">
     <nav class="mobile-menu__nav">
-      <a href="#noise" class="mobile-menu__link">課題</a>
       <a href="#sift" class="mobile-menu__link">UZOUとは</a>
-      <a href="#three-signals" class="mobile-menu__link">機能</a>
+      <a href="#three-signals" class="mobile-menu__link">特徴</a>
+      <a href="#proof" class="mobile-menu__link">実績</a>
       <a href="#flow" class="mobile-menu__link">導入の流れ</a>
-      <a href="#find-signal" class="mobile-menu__cta">資料をダウンロード</a>
+      <a href="#faq" class="mobile-menu__link">FAQ</a>
+      <div class="mobile-menu__cta-group">
+        <a href="#contact" class="mobile-menu__cta mobile-menu__cta--secondary">お問い合わせ</a>
+        <a href="#download" class="mobile-menu__cta mobile-menu__cta--primary">資料ダウンロード</a>
+      </div>
     </nav>
   </div>
 
-  <main id="main-content">
+  <!-- ヒーロー: 技法指定書 セクション1-8 準拠 / 白背景 + SVGノイズ + Canvas NetworkGraph -->
+  <section class="hero" id="hero" aria-label="SIGNAL">
+    <main id="main">
 
-    <!-- セクション1: SIGNAL（ヒーロー） — ダーク背景全面改修 -->
-    <section class="signal" data-section="signal" data-theme="dark" id="signal">
-      <!-- 背景レイヤー群: 5層メッシュグラデーション -->
-      <div class="signal__bg-mesh" aria-hidden="true"></div>
-      <div class="signal__bg-grain" aria-hidden="true"></div>
-      <div class="signal__bg-grid" aria-hidden="true"></div>
-      <div class="signal__glow" aria-hidden="true"></div>
-      <div class="signal__glow signal__glow--accent" aria-hidden="true"></div>
+      <!-- 背景レイヤー: SVGノイズテクスチャ（技法指定書 2-2） -->
+      <div class="hero__noise" aria-hidden="true"></div>
 
-      <!-- 浮遊ポリゴン装飾: 5個のペンタゴン -->
-      <div class="signal__crystal-decorations" aria-hidden="true">
-        <svg class="crystal-deco crystal-deco--1" viewBox="0 0 120 120" fill="none">
-          <polygon points="60,5 115,45 95,110 25,110 5,45" stroke="rgba(73,126,146,0.25)" stroke-width="0.75" fill="rgba(73,126,146,0.03)"/>
-          <polygon points="60,20 100,50 85,100 35,100 20,50" stroke="rgba(73,126,146,0.12)" stroke-width="0.5" fill="none"/>
-        </svg>
-        <svg class="crystal-deco crystal-deco--2" viewBox="0 0 80 80" fill="none">
-          <polygon points="40,4 76,28 66,72 14,72 4,28" stroke="rgba(181,82,46,0.20)" stroke-width="0.75" fill="rgba(181,82,46,0.02)"/>
-        </svg>
-        <svg class="crystal-deco crystal-deco--3" viewBox="0 0 60 60" fill="none">
-          <polygon points="30,3 57,22 48,55 12,55 3,22" stroke="rgba(73,126,146,0.18)" stroke-width="0.75" fill="rgba(73,126,146,0.02)"/>
-        </svg>
-        <svg class="crystal-deco crystal-deco--4" viewBox="0 0 100 100" fill="none">
-          <polygon points="50,8 92,35 80,88 20,88 8,35" stroke="rgba(232,240,243,0.08)" stroke-width="0.5" fill="none"/>
-        </svg>
-        <svg class="crystal-deco crystal-deco--5" viewBox="0 0 40 40" fill="none">
-          <polygon points="20,2 38,15 32,38 8,38 2,15" stroke="rgba(181,82,46,0.15)" stroke-width="0.5" fill="rgba(181,82,46,0.015)"/>
-        </svg>
-      </div>
+      <!-- 背景レイヤー: アンビエントグロー（技法指定書 2-3, マウス追従） -->
+      <div class="hero__glow" aria-hidden="true"></div>
 
-      <div class="signal__container">
-        <div class="signal__text">
-          <span class="signal__brand-label">
-            <span class="signal__brand-label-line" aria-hidden="true"></span>
-            UZOU
-          </span>
-          <h1 class="signal__heading" data-split="true">ノイズの中から、シグナルを。</h1>
-          <p class="signal__subcopy">500を超えるメディアと直接接続。独自AIが最適な配信先を見つけ出し、広告の成果を最大化するネイティブ広告プラットフォーム。</p>
-          <div class="signal__cta-group">
-            <a href="#find-signal" class="btn-primary">資料をダウンロード</a>
-            <a href="#find-signal" class="btn-secondary btn-secondary--dark">まずは相談する</a>
+      <!-- コンテンツ: 左カラム 55%（技法指定書 3-2） -->
+      <div class="hero__content">
+        <div class="hero__content-inner">
+
+          <!-- ブランドラベル（技法指定書 4-1） -->
+          <div class="hero__brand-label">
+            <span class="hero__brand-line" aria-hidden="true"></span>
+            <span class="hero__brand-text">UZOU</span>
+            <span class="hero__brand-desc">ネイティブアド配信プラットフォーム</span>
           </div>
-        </div>
-        <div class="signal__visual">
-          <div class="signal__crystal-glow" aria-hidden="true"></div>
-          <div class="signal__crystal-ring" aria-hidden="true"></div>
-          <img src="assets/crystal-cluster.png" alt="UZOUクリスタルクラスター" class="signal__crystal-img" width="540" height="540">
-          <canvas class="signal__canvas" aria-hidden="true"></canvas>
+
+          <!-- キャッチコピー（技法指定書 4-2, 4-4） -->
+          <h1 class="hero__title">ノイズの中から、<br>シグナルを。</h1>
+
+          <!-- サブコピー（技法指定書 4-3） -->
+          <p class="hero__sub">500を超えるメディアと直接接続。独自AIが最適な配信先を見つけ出し、広告の成果を最大化するネイティブ広告プラットフォーム。</p>
+
+          <!-- CTA群（技法指定書 5-1, 5-2, 5-3） -->
+          <div class="hero__cta-group">
+            <a href="#download" class="btn btn--primary">資料をダウンロード</a>
+            <a href="#contact" class="btn btn--secondary">まずは相談する</a>
+          </div>
+
         </div>
       </div>
 
-      <!-- スクロールインジケーター -->
-      <div class="signal__scroll-indicator" aria-hidden="true">
-        <div class="signal__scroll-line"></div>
+      <!-- ビジュアル: 右カラム 45%, Canvas ネットワークグラフ（技法指定書 セクション7） -->
+      <div class="hero__visual" aria-hidden="true">
+        <canvas class="hero__canvas" id="heroCanvas"></canvas>
       </div>
-    </section>
 
-    <!-- セクション2: TRUSTED BY — リアルSVGロゴ + ダーク背景 -->
-    <section class="trusted-by" data-section="trusted-by" data-theme="dark" aria-label="導入メディア一覧">
-      <p class="trusted-by__label">TRUSTED BY 500+ MEDIA</p>
-      <div class="trusted-by__marquee">
-        <div class="trusted-by__marquee-track">
-          <!-- 1. 新聞社ロゴ: セリフ体+縦線 -->
-          <svg class="trusted-by__logo" width="140" height="28" viewBox="0 0 140 28" fill="none" aria-label="報道メディア">
-            <line x1="0" y1="4" x2="0" y2="24" stroke="currentColor" stroke-width="2.5"/>
-            <text x="10" y="20" fill="currentColor" font-family="Georgia, 'Times New Roman', serif" font-size="15" font-weight="700" letter-spacing="0.08em">NIKKEI PRIME</text>
-          </svg>
-          <!-- 2. 出版社ロゴ: アイコン+サンセリフ -->
-          <svg class="trusted-by__logo" width="130" height="28" viewBox="0 0 130 28" fill="none" aria-label="出版メディア">
-            <rect x="0" y="6" width="16" height="16" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/>
-            <rect x="3" y="9" width="10" height="2" rx="1" fill="currentColor" opacity="0.4"/>
-            <rect x="3" y="13" width="7" height="2" rx="1" fill="currentColor" opacity="0.3"/>
-            <text x="22" y="20" fill="currentColor" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="700" letter-spacing="0.04em">SHUEISHA D</text>
-          </svg>
-          <!-- 3. エンタメロゴ: 星+ボールド -->
-          <svg class="trusted-by__logo" width="150" height="28" viewBox="0 0 150 28" fill="none" aria-label="エンタメメディア">
-            <polygon points="10,3 12.5,9 19,9 13.8,13 15.5,19.5 10,15.5 4.5,19.5 6.2,13 1,9 7.5,9" fill="currentColor" opacity="0.5"/>
-            <text x="25" y="20" fill="currentColor" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" letter-spacing="0.02em">ORICON MEDIA</text>
-          </svg>
-          <!-- 4. スポーツロゴ: 斜体+ストライプ -->
-          <svg class="trusted-by__logo" width="120" height="28" viewBox="0 0 120 28" fill="none" aria-label="スポーツメディア">
-            <line x1="0" y1="24" x2="16" y2="24" stroke="currentColor" stroke-width="2.5"/>
-            <line x1="2" y1="20" x2="12" y2="20" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>
-            <text x="0" y="16" fill="currentColor" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" letter-spacing="-0.01em" font-style="italic">SPORTS.jp</text>
-          </svg>
-          <!-- 5. ライフスタイルロゴ: 細字+ドット区切り -->
-          <svg class="trusted-by__logo" width="140" height="28" viewBox="0 0 140 28" fill="none" aria-label="ライフスタイルメディア">
-            <text x="0" y="20" fill="currentColor" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="300" letter-spacing="0.12em">LIFESTYLE</text>
-            <circle cx="96" cy="17" r="1.5" fill="currentColor" opacity="0.4"/>
-            <text x="102" y="20" fill="currentColor" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="600" letter-spacing="0.04em">NAVI</text>
-          </svg>
-          <!-- 6. ビジネスロゴ: 角括弧+キャピタル -->
-          <svg class="trusted-by__logo" width="130" height="28" viewBox="0 0 130 28" fill="none" aria-label="ビジネスメディア">
-            <path d="M2,6 L2,22 M2,6 L8,6 M2,22 L8,22" stroke="currentColor" stroke-width="1.5" fill="none"/>
-            <text x="14" y="19" fill="currentColor" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="700" letter-spacing="0.10em">BIZ JOURNAL</text>
-            <path d="M128,6 L128,22 M128,6 L122,6 M128,22 L122,22" stroke="currentColor" stroke-width="1.5" fill="none"/>
-          </svg>
-          <!-- 7. ファッションロゴ: 極細字+大文字 -->
-          <svg class="trusted-by__logo" width="110" height="28" viewBox="0 0 110 28" fill="none" aria-label="ファッションメディア">
-            <text x="0" y="20" fill="currentColor" font-family="Georgia, 'Times New Roman', serif" font-size="16" font-weight="400" letter-spacing="0.20em">VOGUE.jp</text>
-          </svg>
-          <!-- 8. テックロゴ: モノスペース+スラッシュ -->
-          <svg class="trusted-by__logo" width="120" height="28" viewBox="0 0 120 28" fill="none" aria-label="テックメディア">
-            <text x="0" y="19" fill="currentColor" font-family="'SF Mono', 'Fira Code', monospace" font-size="11" font-weight="600" letter-spacing="0.06em">&lt;TECH/CRUNCH&gt;</text>
-          </svg>
-          <!-- 複製（無限ループ用） -->
-          <svg class="trusted-by__logo" width="140" height="28" viewBox="0 0 140 28" fill="none" aria-label="報道メディア">
-            <line x1="0" y1="4" x2="0" y2="24" stroke="currentColor" stroke-width="2.5"/>
-            <text x="10" y="20" fill="currentColor" font-family="Georgia, 'Times New Roman', serif" font-size="15" font-weight="700" letter-spacing="0.08em">NIKKEI PRIME</text>
-          </svg>
-          <svg class="trusted-by__logo" width="130" height="28" viewBox="0 0 130 28" fill="none" aria-label="出版メディア">
-            <rect x="0" y="6" width="16" height="16" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/>
-            <rect x="3" y="9" width="10" height="2" rx="1" fill="currentColor" opacity="0.4"/>
-            <rect x="3" y="13" width="7" height="2" rx="1" fill="currentColor" opacity="0.3"/>
-            <text x="22" y="20" fill="currentColor" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="700" letter-spacing="0.04em">SHUEISHA D</text>
-          </svg>
-          <svg class="trusted-by__logo" width="150" height="28" viewBox="0 0 150 28" fill="none" aria-label="エンタメメディア">
-            <polygon points="10,3 12.5,9 19,9 13.8,13 15.5,19.5 10,15.5 4.5,19.5 6.2,13 1,9 7.5,9" fill="currentColor" opacity="0.5"/>
-            <text x="25" y="20" fill="currentColor" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" letter-spacing="0.02em">ORICON MEDIA</text>
-          </svg>
-          <svg class="trusted-by__logo" width="120" height="28" viewBox="0 0 120 28" fill="none" aria-label="スポーツメディア">
-            <line x1="0" y1="24" x2="16" y2="24" stroke="currentColor" stroke-width="2.5"/>
-            <line x1="2" y1="20" x2="12" y2="20" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>
-            <text x="0" y="16" fill="currentColor" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" letter-spacing="-0.01em" font-style="italic">SPORTS.jp</text>
-          </svg>
-          <svg class="trusted-by__logo" width="140" height="28" viewBox="0 0 140 28" fill="none" aria-label="ライフスタイルメディア">
-            <text x="0" y="20" fill="currentColor" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="300" letter-spacing="0.12em">LIFESTYLE</text>
-            <circle cx="96" cy="17" r="1.5" fill="currentColor" opacity="0.4"/>
-            <text x="102" y="20" fill="currentColor" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="600" letter-spacing="0.04em">NAVI</text>
-          </svg>
-          <svg class="trusted-by__logo" width="130" height="28" viewBox="0 0 130 28" fill="none" aria-label="ビジネスメディア">
-            <path d="M2,6 L2,22 M2,6 L8,6 M2,22 L8,22" stroke="currentColor" stroke-width="1.5" fill="none"/>
-            <text x="14" y="19" fill="currentColor" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="700" letter-spacing="0.10em">BIZ JOURNAL</text>
-            <path d="M128,6 L128,22 M128,6 L122,6 M128,22 L122,22" stroke="currentColor" stroke-width="1.5" fill="none"/>
-          </svg>
-          <svg class="trusted-by__logo" width="110" height="28" viewBox="0 0 110 28" fill="none" aria-label="ファッションメディア">
-            <text x="0" y="20" fill="currentColor" font-family="Georgia, 'Times New Roman', serif" font-size="16" font-weight="400" letter-spacing="0.20em">VOGUE.jp</text>
-          </svg>
-          <svg class="trusted-by__logo" width="120" height="28" viewBox="0 0 120 28" fill="none" aria-label="テックメディア">
-            <text x="0" y="19" fill="currentColor" font-family="'SF Mono', 'Fira Code', monospace" font-size="11" font-weight="600" letter-spacing="0.06em">&lt;TECH/CRUNCH&gt;</text>
-          </svg>
-        </div>
+    </main>
+  </section>
+
+  <!-- TRUSTED BY: 2列ロゴマーキー（技法指定書対象外、concept-v2 + visual-sequence-v2 準拠） -->
+  <section class="trusted-by" data-section="trusted-by" aria-label="導入メディア一覧">
+    <p class="trusted-by__label">TRUSTED BY 500+ MEDIA</p>
+    <!-- 上段マーキー: 左→右 -->
+    <div class="trusted-by__marquee">
+      <div class="trusted-by__marquee-track trusted-by__marquee-track--left">
+        <!-- 1. 新聞社ロゴ -->
+        <svg class="trusted-by__logo" width="140" height="28" viewBox="0 0 140 28" fill="none" aria-label="報道メディア">
+          <line x1="0" y1="4" x2="0" y2="24" stroke="currentColor" stroke-width="2.5"/>
+          <text x="10" y="20" fill="currentColor" font-family="Georgia, 'Times New Roman', serif" font-size="15" font-weight="700" letter-spacing="0.08em">NIKKEI PRIME</text>
+        </svg>
+        <!-- 2. 出版社ロゴ -->
+        <svg class="trusted-by__logo" width="130" height="28" viewBox="0 0 130 28" fill="none" aria-label="出版メディア">
+          <rect x="0" y="6" width="16" height="16" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/>
+          <rect x="3" y="9" width="10" height="2" rx="1" fill="currentColor" opacity="0.4"/>
+          <rect x="3" y="13" width="7" height="2" rx="1" fill="currentColor" opacity="0.3"/>
+          <text x="22" y="20" fill="currentColor" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="700" letter-spacing="0.04em">SHUEISHA D</text>
+        </svg>
+        <!-- 3. エンタメロゴ -->
+        <svg class="trusted-by__logo" width="150" height="28" viewBox="0 0 150 28" fill="none" aria-label="エンタメメディア">
+          <polygon points="10,3 12.5,9 19,9 13.8,13 15.5,19.5 10,15.5 4.5,19.5 6.2,13 1,9 7.5,9" fill="currentColor" opacity="0.5"/>
+          <text x="25" y="20" fill="currentColor" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" letter-spacing="0.02em">ORICON MEDIA</text>
+        </svg>
+        <!-- 4. スポーツロゴ -->
+        <svg class="trusted-by__logo" width="120" height="28" viewBox="0 0 120 28" fill="none" aria-label="スポーツメディア">
+          <line x1="0" y1="24" x2="16" y2="24" stroke="currentColor" stroke-width="2.5"/>
+          <line x1="2" y1="20" x2="12" y2="20" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>
+          <text x="0" y="16" fill="currentColor" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" letter-spacing="-0.01em" font-style="italic">SPORTS.jp</text>
+        </svg>
+        <!-- 5. ライフスタイルロゴ -->
+        <svg class="trusted-by__logo" width="140" height="28" viewBox="0 0 140 28" fill="none" aria-label="ライフスタイルメディア">
+          <text x="0" y="20" fill="currentColor" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="300" letter-spacing="0.12em">LIFESTYLE</text>
+          <circle cx="96" cy="17" r="1.5" fill="currentColor" opacity="0.4"/>
+          <text x="102" y="20" fill="currentColor" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="600" letter-spacing="0.04em">NAVI</text>
+        </svg>
+        <!-- 6. ビジネスロゴ -->
+        <svg class="trusted-by__logo" width="130" height="28" viewBox="0 0 130 28" fill="none" aria-label="ビジネスメディア">
+          <path d="M2,6 L2,22 M2,6 L8,6 M2,22 L8,22" stroke="currentColor" stroke-width="1.5" fill="none"/>
+          <text x="14" y="19" fill="currentColor" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="700" letter-spacing="0.10em">BIZ JOURNAL</text>
+          <path d="M128,6 L128,22 M128,6 L122,6 M128,22 L122,22" stroke="currentColor" stroke-width="1.5" fill="none"/>
+        </svg>
+        <!-- 7. ファッションロゴ -->
+        <svg class="trusted-by__logo" width="110" height="28" viewBox="0 0 110 28" fill="none" aria-label="ファッションメディア">
+          <text x="0" y="20" fill="currentColor" font-family="Georgia, 'Times New Roman', serif" font-size="16" font-weight="400" letter-spacing="0.20em">VOGUE.jp</text>
+        </svg>
+        <!-- 8. テックロゴ -->
+        <svg class="trusted-by__logo" width="120" height="28" viewBox="0 0 120 28" fill="none" aria-label="テックメディア">
+          <text x="0" y="19" fill="currentColor" font-family="'SF Mono', 'Fira Code', monospace" font-size="11" font-weight="600" letter-spacing="0.06em">&lt;TECH/CRUNCH&gt;</text>
+        </svg>
+        <!-- 複製（無限ループ用） -->
+        <svg class="trusted-by__logo" width="140" height="28" viewBox="0 0 140 28" fill="none" aria-label="報道メディア"><line x1="0" y1="4" x2="0" y2="24" stroke="currentColor" stroke-width="2.5"/><text x="10" y="20" fill="currentColor" font-family="Georgia, 'Times New Roman', serif" font-size="15" font-weight="700" letter-spacing="0.08em">NIKKEI PRIME</text></svg>
+        <svg class="trusted-by__logo" width="130" height="28" viewBox="0 0 130 28" fill="none" aria-label="出版メディア"><rect x="0" y="6" width="16" height="16" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><rect x="3" y="9" width="10" height="2" rx="1" fill="currentColor" opacity="0.4"/><rect x="3" y="13" width="7" height="2" rx="1" fill="currentColor" opacity="0.3"/><text x="22" y="20" fill="currentColor" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="700" letter-spacing="0.04em">SHUEISHA D</text></svg>
+        <svg class="trusted-by__logo" width="150" height="28" viewBox="0 0 150 28" fill="none" aria-label="エンタメメディア"><polygon points="10,3 12.5,9 19,9 13.8,13 15.5,19.5 10,15.5 4.5,19.5 6.2,13 1,9 7.5,9" fill="currentColor" opacity="0.5"/><text x="25" y="20" fill="currentColor" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" letter-spacing="0.02em">ORICON MEDIA</text></svg>
+        <svg class="trusted-by__logo" width="120" height="28" viewBox="0 0 120 28" fill="none" aria-label="スポーツメディア"><line x1="0" y1="24" x2="16" y2="24" stroke="currentColor" stroke-width="2.5"/><line x1="2" y1="20" x2="12" y2="20" stroke="currentColor" stroke-width="1.5" opacity="0.4"/><text x="0" y="16" fill="currentColor" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" letter-spacing="-0.01em" font-style="italic">SPORTS.jp</text></svg>
+        <svg class="trusted-by__logo" width="140" height="28" viewBox="0 0 140 28" fill="none" aria-label="ライフスタイルメディア"><text x="0" y="20" fill="currentColor" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="300" letter-spacing="0.12em">LIFESTYLE</text><circle cx="96" cy="17" r="1.5" fill="currentColor" opacity="0.4"/><text x="102" y="20" fill="currentColor" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="600" letter-spacing="0.04em">NAVI</text></svg>
+        <svg class="trusted-by__logo" width="130" height="28" viewBox="0 0 130 28" fill="none" aria-label="ビジネスメディア"><path d="M2,6 L2,22 M2,6 L8,6 M2,22 L8,22" stroke="currentColor" stroke-width="1.5" fill="none"/><text x="14" y="19" fill="currentColor" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="700" letter-spacing="0.10em">BIZ JOURNAL</text><path d="M128,6 L128,22 M128,6 L122,6 M128,22 L122,22" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+        <svg class="trusted-by__logo" width="110" height="28" viewBox="0 0 110 28" fill="none" aria-label="ファッションメディア"><text x="0" y="20" fill="currentColor" font-family="Georgia, 'Times New Roman', serif" font-size="16" font-weight="400" letter-spacing="0.20em">VOGUE.jp</text></svg>
+        <svg class="trusted-by__logo" width="120" height="28" viewBox="0 0 120 28" fill="none" aria-label="テックメディア"><text x="0" y="19" fill="currentColor" font-family="'SF Mono', 'Fira Code', monospace" font-size="11" font-weight="600" letter-spacing="0.06em">&lt;TECH/CRUNCH&gt;</text></svg>
       </div>
-      <div class="trusted-by__transition" aria-hidden="true"></div>
-    </section>
-
+    </div>
+    <!-- 下段マーキー: 右→左（逆方向） -->
+    <div class="trusted-by__marquee trusted-by__marquee--reverse">
+      <div class="trusted-by__marquee-track trusted-by__marquee-track--right">
+        <svg class="trusted-by__logo" width="120" height="28" viewBox="0 0 120 28" fill="none" aria-label="テックメディア"><text x="0" y="19" fill="currentColor" font-family="'SF Mono', 'Fira Code', monospace" font-size="11" font-weight="600" letter-spacing="0.06em">&lt;TECH/CRUNCH&gt;</text></svg>
+        <svg class="trusted-by__logo" width="110" height="28" viewBox="0 0 110 28" fill="none" aria-label="ファッションメディア"><text x="0" y="20" fill="currentColor" font-family="Georgia, 'Times New Roman', serif" font-size="16" font-weight="400" letter-spacing="0.20em">VOGUE.jp</text></svg>
+        <svg class="trusted-by__logo" width="130" height="28" viewBox="0 0 130 28" fill="none" aria-label="ビジネスメディア"><path d="M2,6 L2,22 M2,6 L8,6 M2,22 L8,22" stroke="currentColor" stroke-width="1.5" fill="none"/><text x="14" y="19" fill="currentColor" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="700" letter-spacing="0.10em">BIZ JOURNAL</text><path d="M128,6 L128,22 M128,6 L122,6 M128,22 L122,22" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+        <svg class="trusted-by__logo" width="140" height="28" viewBox="0 0 140 28" fill="none" aria-label="ライフスタイルメディア"><text x="0" y="20" fill="currentColor" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="300" letter-spacing="0.12em">LIFESTYLE</text><circle cx="96" cy="17" r="1.5" fill="currentColor" opacity="0.4"/><text x="102" y="20" fill="currentColor" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="600" letter-spacing="0.04em">NAVI</text></svg>
+        <svg class="trusted-by__logo" width="120" height="28" viewBox="0 0 120 28" fill="none" aria-label="スポーツメディア"><line x1="0" y1="24" x2="16" y2="24" stroke="currentColor" stroke-width="2.5"/><line x1="2" y1="20" x2="12" y2="20" stroke="currentColor" stroke-width="1.5" opacity="0.4"/><text x="0" y="16" fill="currentColor" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" letter-spacing="-0.01em" font-style="italic">SPORTS.jp</text></svg>
+        <svg class="trusted-by__logo" width="150" height="28" viewBox="0 0 150 28" fill="none" aria-label="エンタメメディア"><polygon points="10,3 12.5,9 19,9 13.8,13 15.5,19.5 10,15.5 4.5,19.5 6.2,13 1,9 7.5,9" fill="currentColor" opacity="0.5"/><text x="25" y="20" fill="currentColor" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" letter-spacing="0.02em">ORICON MEDIA</text></svg>
+        <svg class="trusted-by__logo" width="130" height="28" viewBox="0 0 130 28" fill="none" aria-label="出版メディア"><rect x="0" y="6" width="16" height="16" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><rect x="3" y="9" width="10" height="2" rx="1" fill="currentColor" opacity="0.4"/><rect x="3" y="13" width="7" height="2" rx="1" fill="currentColor" opacity="0.3"/><text x="22" y="20" fill="currentColor" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="700" letter-spacing="0.04em">SHUEISHA D</text></svg>
+        <svg class="trusted-by__logo" width="140" height="28" viewBox="0 0 140 28" fill="none" aria-label="報道メディア"><line x1="0" y1="4" x2="0" y2="24" stroke="currentColor" stroke-width="2.5"/><text x="10" y="20" fill="currentColor" font-family="Georgia, 'Times New Roman', serif" font-size="15" font-weight="700" letter-spacing="0.08em">NIKKEI PRIME</text></svg>
+        <!-- 複製（無限ループ用） -->
+        <svg class="trusted-by__logo" width="120" height="28" viewBox="0 0 120 28" fill="none" aria-label="テックメディア"><text x="0" y="19" fill="currentColor" font-family="'SF Mono', 'Fira Code', monospace" font-size="11" font-weight="600" letter-spacing="0.06em">&lt;TECH/CRUNCH&gt;</text></svg>
+        <svg class="trusted-by__logo" width="110" height="28" viewBox="0 0 110 28" fill="none" aria-label="ファッションメディア"><text x="0" y="20" fill="currentColor" font-family="Georgia, 'Times New Roman', serif" font-size="16" font-weight="400" letter-spacing="0.20em">VOGUE.jp</text></svg>
+        <svg class="trusted-by__logo" width="130" height="28" viewBox="0 0 130 28" fill="none" aria-label="ビジネスメディア"><path d="M2,6 L2,22 M2,6 L8,6 M2,22 L8,22" stroke="currentColor" stroke-width="1.5" fill="none"/><text x="14" y="19" fill="currentColor" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="700" letter-spacing="0.10em">BIZ JOURNAL</text><path d="M128,6 L128,22 M128,6 L122,6 M128,22 L122,22" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+        <svg class="trusted-by__logo" width="140" height="28" viewBox="0 0 140 28" fill="none" aria-label="ライフスタイルメディア"><text x="0" y="20" fill="currentColor" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="300" letter-spacing="0.12em">LIFESTYLE</text><circle cx="96" cy="17" r="1.5" fill="currentColor" opacity="0.4"/><text x="102" y="20" fill="currentColor" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="600" letter-spacing="0.04em">NAVI</text></svg>
+        <svg class="trusted-by__logo" width="120" height="28" viewBox="0 0 120 28" fill="none" aria-label="スポーツメディア"><line x1="0" y1="24" x2="16" y2="24" stroke="currentColor" stroke-width="2.5"/><line x1="2" y1="20" x2="12" y2="20" stroke="currentColor" stroke-width="1.5" opacity="0.4"/><text x="0" y="16" fill="currentColor" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" letter-spacing="-0.01em" font-style="italic">SPORTS.jp</text></svg>
+        <svg class="trusted-by__logo" width="150" height="28" viewBox="0 0 150 28" fill="none" aria-label="エンタメメディア"><polygon points="10,3 12.5,9 19,9 13.8,13 15.5,19.5 10,15.5 4.5,19.5 6.2,13 1,9 7.5,9" fill="currentColor" opacity="0.5"/><text x="25" y="20" fill="currentColor" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" letter-spacing="0.02em">ORICON MEDIA</text></svg>
+        <svg class="trusted-by__logo" width="130" height="28" viewBox="0 0 130 28" fill="none" aria-label="出版メディア"><rect x="0" y="6" width="16" height="16" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><rect x="3" y="9" width="10" height="2" rx="1" fill="currentColor" opacity="0.4"/><rect x="3" y="13" width="7" height="2" rx="1" fill="currentColor" opacity="0.3"/><text x="22" y="20" fill="currentColor" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="700" letter-spacing="0.04em">SHUEISHA D</text></svg>
+        <svg class="trusted-by__logo" width="140" height="28" viewBox="0 0 140 28" fill="none" aria-label="報道メディア"><line x1="0" y1="4" x2="0" y2="24" stroke="currentColor" stroke-width="2.5"/><text x="10" y="20" fill="currentColor" font-family="Georgia, 'Times New Roman', serif" font-size="15" font-weight="700" letter-spacing="0.08em">NIKKEI PRIME</text></svg>
+      </div>
+    </div>
+    <!-- TRUSTED BY → NOISE グラデーション遷移帯 -->
+    <div class="trusted-by__transition" aria-hidden="true"></div>
+  </section>
     <!-- セクション3: NOISE（課題） — 背景テクスチャ強化 -->
     <section class="noise" data-section="noise" data-theme="light" id="noise">
       <div class="noise__polygon-deco" aria-hidden="true">
@@ -974,8 +974,8 @@
         <h2 class="find-signal__heading">あなたのシグナルを、<br>見つけよう。</h2>
         <p class="find-signal__subcopy">まずは資料をご覧ください。UZOUがどう成果を変えるか、具体的にお伝えします。</p>
         <div class="find-signal__cta-group">
-          <a href="#" class="btn-primary">資料をダウンロード</a>
-          <a href="#" class="btn-secondary btn-secondary--dark">まずは相談する</a>
+          <a href="#download" class="btn btn--primary">資料をダウンロード</a>
+          <a href="#contact" class="btn btn--secondary">まずは相談する</a>
         </div>
       </div>
     </section>

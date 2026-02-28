@@ -1,7 +1,7 @@
 /* ==============================================
-   UZOU LP v11 — インタラクション・アニメーション
-   ビジュアルオーバーホール版。
-   技法指定書 v11-visual-overhaul-spec.md 準拠。
+   UZOU LP v2 — Sift + KAGAMI技法
+   技法指定書 spec-hero-v2.md 準拠。
+   ヒーロー白背景化、Canvas NetworkGraph。
    ============================================== */
 
 (function () {
@@ -23,8 +23,8 @@
       node: 'rgba(73, 126, 146, 0.60)',
       nodeFill: 'rgba(73, 126, 146, 0.15)',
       connection: 'rgba(73, 126, 146, 0.10)',
-      highlightNode: '#B5522E',
-      highlightConnection: 'rgba(181, 82, 46, 0.30)',
+      highlightNode: '#E07B5A',
+      highlightConnection: 'rgba(224, 123, 90, 0.30)',
     },
   };
 
@@ -39,8 +39,8 @@
       node: 'rgba(232, 240, 243, 0.25)',
       nodeFill: 'rgba(232, 240, 243, 0.08)',
       connection: 'rgba(232, 240, 243, 0.06)',
-      highlightNode: '#B5522E',
-      highlightConnection: 'rgba(181, 82, 46, 0.15)',
+      highlightNode: '#E07B5A',
+      highlightConnection: 'rgba(224, 123, 90, 0.15)',
     },
   };
 
@@ -191,7 +191,7 @@
         this.drawPolygon(p.x, p.y, p.size, p.sides, p.rotation);
 
         if (isHighlight) {
-          this.ctx.fillStyle = 'rgba(181, 82, 46, 0.25)';
+          this.ctx.fillStyle = 'rgba(224, 123, 90, 0.25)';
           this.ctx.strokeStyle = this.config.colors.highlightNode;
           this.ctx.lineWidth = 1.5;
         } else {
@@ -291,50 +291,49 @@
     header.classList.toggle('header--dark', isOverDark);
   }
 
-  /* === パララックス（ヒーロークリスタル画像） === */
-  function updateParallax() {
-    if (prefersReducedMotion) return;
-    const crystal = document.querySelector('.signal__crystal-img');
-    if (!crystal) return;
-    const scrollY = window.scrollY;
-    const factor = -0.15;
-    crystal.style.transform = `translateY(${scrollY * factor}px)`;
+  /* === ヘッダースクロール検知: frosted glass 切替 === */
+  function updateHeaderScroll() {
+    const header = document.querySelector('.header');
+    if (!header) return;
+    header.classList.toggle('header--scrolled', window.scrollY > 32);
   }
 
-  /* === v11: マウス追従アンビエントグロー（アクセントグロー対応） === */
+  /* === マウス追従アンビエントグロー（ヒーロー + FIND SIGNAL） === */
   function initAmbientGlow() {
-    const signalGlows = document.querySelectorAll('.signal__glow');
+    const heroGlow = document.querySelector('.hero__glow');
     const findSignalGlow = document.querySelector('.find-signal__glow');
 
     if (!prefersReducedMotion) {
+      let rafId = null;
       document.addEventListener('mousemove', (e) => {
-        /* ヒーローセクションのグロー追従 */
-        if (signalGlows.length > 0) {
-          const signalSection = document.querySelector('.signal');
-          if (signalSection) {
-            const rect = signalSection.getBoundingClientRect();
-            if (e.clientY >= rect.top && e.clientY <= rect.bottom) {
-              signalGlows.forEach((glow, i) => {
-                /* i=0: メイングロー（追従）、i=1: アクセントグロー（offset付き追従） */
-                const offsetX = i === 0 ? 0 : -200;
-                const offsetY = i === 0 ? 0 : -100;
-                glow.style.left = (e.clientX + offsetX) + 'px';
-                glow.style.top = (e.clientY - rect.top + offsetY) + 'px';
-              });
+        if (rafId) return;
+        rafId = requestAnimationFrame(() => {
+          /* ヒーローセクションのグロー追従（CSS custom property方式） */
+          if (heroGlow) {
+            const heroSection = document.querySelector('.hero');
+            if (heroSection) {
+              const rect = heroSection.getBoundingClientRect();
+              if (e.clientY >= rect.top && e.clientY <= rect.bottom) {
+                const x = ((e.clientX - rect.left) / rect.width * 100);
+                const y = ((e.clientY - rect.top) / rect.height * 100);
+                heroGlow.style.setProperty('--mouse-x', x + '%');
+                heroGlow.style.setProperty('--mouse-y', y + '%');
+              }
             }
           }
-        }
-        /* FIND SIGNALグロー追従 */
-        if (findSignalGlow) {
-          const fsSection = document.querySelector('.find-signal');
-          if (fsSection) {
-            const rect = fsSection.getBoundingClientRect();
-            if (e.clientY >= rect.top && e.clientY <= rect.bottom) {
-              findSignalGlow.style.left = e.clientX + 'px';
-              findSignalGlow.style.top = (e.clientY - rect.top) + 'px';
+          /* FIND SIGNALグロー追従 */
+          if (findSignalGlow) {
+            const fsSection = document.querySelector('.find-signal');
+            if (fsSection) {
+              const rect = fsSection.getBoundingClientRect();
+              if (e.clientY >= rect.top && e.clientY <= rect.bottom) {
+                findSignalGlow.style.left = e.clientX + 'px';
+                findSignalGlow.style.top = (e.clientY - rect.top) + 'px';
+              }
             }
           }
-        }
+          rafId = null;
+        });
       });
     }
   }
@@ -342,7 +341,7 @@
   /* === マグネティックボタン === */
   function initMagneticButtons() {
     if (prefersReducedMotion) return;
-    const buttons = document.querySelectorAll('.btn-primary');
+    const buttons = document.querySelectorAll('.btn--primary');
     buttons.forEach((btn) => {
       btn.addEventListener('mousemove', (e) => {
         const rect = btn.getBoundingClientRect();
@@ -378,7 +377,7 @@
 
   /* === ホバーリップル === */
   function initRipple() {
-    const buttons = document.querySelectorAll('.btn-primary');
+    const buttons = document.querySelectorAll('.btn--primary');
     buttons.forEach((btn) => {
       btn.addEventListener('click', (e) => {
         const ripple = document.createElement('span');
@@ -429,7 +428,7 @@
 
   /* === モバイルメニュー === */
   function initMobileMenu() {
-    const menuBtn = document.querySelector('.header__menu-btn');
+    const menuBtn = document.querySelector('.header__hamburger');
     const mobileMenu = document.querySelector('.mobile-menu');
     if (!menuBtn || !mobileMenu) return;
 
@@ -522,7 +521,7 @@
     nodes.forEach((node) => {
       node.addEventListener('mouseenter', () => {
         connections.forEach((conn) => {
-          conn.style.stroke = 'rgba(181, 82, 46, 0.25)';
+          conn.style.stroke = 'rgba(224, 123, 90, 0.25)';
           conn.style.strokeWidth = '1.5px';
         });
       });
@@ -633,14 +632,10 @@
 
   /* === 初期化 === */
   function init() {
-    /* テキストスプリット */
-    const heading = document.querySelector('.signal__heading[data-split]');
-    if (heading) splitText(heading);
-
     /* Canvas ネットワークグラフ（ヒーロー） */
-    const signalCanvas = document.querySelector('.signal__canvas');
-    if (signalCanvas) {
-      new NetworkGraph(signalCanvas, NETWORK_CONFIG);
+    const heroCanvas = document.querySelector('.hero__canvas');
+    if (heroCanvas) {
+      new NetworkGraph(heroCanvas, NETWORK_CONFIG);
     }
 
     /* Canvas ネットワークグラフ（最終CTA） */
@@ -656,7 +651,7 @@
         requestAnimationFrame(() => {
           updateScrollProgress();
           updateHeaderTheme();
-          updateParallax();
+          updateHeaderScroll();
           ticking = false;
         });
         ticking = true;
@@ -666,6 +661,7 @@
     /* 初期状態の更新 */
     updateScrollProgress();
     updateHeaderTheme();
+    updateHeaderScroll();
 
     /* インタラクション初期化 */
     initAmbientGlow();
