@@ -1,562 +1,686 @@
-/* ======================================================
-   UZOU LP v10 — Signal Pulse
-   全セクション: アニメーション + インタラクション
-   ====================================================== */
+/* ==============================================
+   UZOU LP v11 — インタラクション・アニメーション
+   ビジュアルオーバーホール版。
+   技法指定書 v11-visual-overhaul-spec.md 準拠。
+   ============================================== */
 
 (function () {
   'use strict';
 
-  /* ---- ユーティリティ: reduced-motion チェック ---- */
-  const prefersReducedMotion = () =>
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* === prefers-reduced-motion 検知 === */
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ======================================================
-     1. マウス追従グラデーション
-     requestAnimationFrame でスロットリング
-     ====================================================== */
-  function initMouseFollow() {
-    const hero = document.querySelector('.hero');
-    if (!hero) return;
+  /* === Canvas ネットワークグラフ設定 === */
+  /* v11: particleCount 90, connectionDistance 140, 色調整 */
+  const NETWORK_CONFIG = {
+    particleCount: 90,
+    connectionDistance: 140,
+    particleSpeed: 0.25,
+    particleSizeRange: [1.5, 4],
+    highlightCount: 6,
+    highlightInterval: 2500,
+    colors: {
+      node: 'rgba(73, 126, 146, 0.60)',
+      nodeFill: 'rgba(73, 126, 146, 0.15)',
+      connection: 'rgba(73, 126, 146, 0.10)',
+      highlightNode: '#B5522E',
+      highlightConnection: 'rgba(181, 82, 46, 0.30)',
+    },
+  };
 
-    /* タッチデバイスでは実行しない */
-    if (window.matchMedia('(hover: none)').matches) return;
+  const FIND_SIGNAL_CONFIG = {
+    particleCount: 120,
+    connectionDistance: 100,
+    particleSpeed: 0.25,
+    particleSizeRange: [2, 4],
+    highlightCount: 8,
+    highlightInterval: 2500,
+    colors: {
+      node: 'rgba(232, 240, 243, 0.25)',
+      nodeFill: 'rgba(232, 240, 243, 0.08)',
+      connection: 'rgba(232, 240, 243, 0.06)',
+      highlightNode: '#B5522E',
+      highlightConnection: 'rgba(181, 82, 46, 0.15)',
+    },
+  };
 
-    let ticking = false;
+  /* === IntersectionObserver 設定 === */
+  const OBSERVER_CONFIG = {
+    threshold: 0.15,
+    rootMargin: '0px 0px -50px 0px',
+  };
 
-    hero.addEventListener('mousemove', (e) => {
-      if (ticking) return;
-      ticking = true;
+  const PROOF_OBSERVER_CONFIG = {
+    threshold: 0.30,
+    rootMargin: '0px',
+  };
 
-      requestAnimationFrame(() => {
-        const rect = hero.getBoundingClientRect();
-        const x = ((e.clientX - rect.left) / rect.width) * 100;
-        const y = ((e.clientY - rect.top) / rect.height) * 100;
-        hero.style.setProperty('--mouse-x', x + '%');
-        hero.style.setProperty('--mouse-y', y + '%');
-        ticking = false;
+  /* === テキストスプリット === */
+  function splitText(element) {
+    if (!element) return;
+    const text = element.textContent;
+    element.innerHTML = '';
+    let charIndex = 0;
+    for (const char of text) {
+      const span = document.createElement('span');
+      span.className = 'char';
+      span.textContent = char === ' ' ? '\u00A0' : char;
+      if (!prefersReducedMotion) {
+        span.style.animationDelay = `${charIndex * 30}ms`;
+      } else {
+        span.style.opacity = '1';
+        span.style.transform = 'none';
+        span.style.animation = 'none';
+      }
+      element.appendChild(span);
+      charIndex++;
+    }
+  }
+
+  /* === Canvas ネットワークグラフ === */
+  class NetworkGraph {
+    constructor(canvas, config) {
+      this.canvas = canvas;
+      this.ctx = canvas.getContext('2d');
+      this.config = config;
+      this.particles = [];
+      this.highlightedIndices = new Set();
+      this.animationId = null;
+      this.lastHighlightTime = 0;
+      this.resizeObserver = null;
+      this.init();
+    }
+
+    init() {
+      this.resize();
+      this.createParticles();
+      this.randomHighlight();
+      if (!prefersReducedMotion) {
+        this.animate();
+      } else {
+        this.drawStatic();
+      }
+      this.resizeObserver = new ResizeObserver(() => this.resize());
+      this.resizeObserver.observe(this.canvas.parentElement);
+    }
+
+    resize() {
+      const parent = this.canvas.parentElement;
+      const rect = parent.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      this.canvas.width = rect.width * dpr;
+      this.canvas.height = rect.height * dpr;
+      this.canvas.style.width = rect.width + 'px';
+      this.canvas.style.height = rect.height + 'px';
+      this.ctx.scale(dpr, dpr);
+      this.width = rect.width;
+      this.height = rect.height;
+    }
+
+    createParticles() {
+      this.particles = [];
+      for (let i = 0; i < this.config.particleCount; i++) {
+        this.particles.push({
+          x: Math.random() * this.width,
+          y: Math.random() * this.height,
+          vx: (Math.random() - 0.5) * this.config.particleSpeed * 2,
+          vy: (Math.random() - 0.5) * this.config.particleSpeed * 2,
+          size: this.config.particleSizeRange[0] + Math.random() * (this.config.particleSizeRange[1] - this.config.particleSizeRange[0]),
+          sides: Math.floor(Math.random() * 3) + 3,
+          rotation: Math.random() * Math.PI * 2,
+          rotationSpeed: (Math.random() - 0.5) * 0.02,
+        });
+      }
+    }
+
+    randomHighlight() {
+      this.highlightedIndices.clear();
+      const indices = Array.from({ length: this.particles.length }, (_, i) => i);
+      for (let i = indices.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [indices[i], indices[j]] = [indices[j], indices[i]];
+      }
+      for (let i = 0; i < Math.min(this.config.highlightCount, indices.length); i++) {
+        this.highlightedIndices.add(indices[i]);
+      }
+    }
+
+    drawPolygon(x, y, size, sides, rotation) {
+      this.ctx.beginPath();
+      for (let i = 0; i < sides; i++) {
+        const angle = (i / sides) * Math.PI * 2 + rotation;
+        const px = x + Math.cos(angle) * size;
+        const py = y + Math.sin(angle) * size;
+        if (i === 0) this.ctx.moveTo(px, py);
+        else this.ctx.lineTo(px, py);
+      }
+      this.ctx.closePath();
+    }
+
+    draw() {
+      this.ctx.clearRect(0, 0, this.width, this.height);
+
+      /* 接続線の描画 */
+      for (let i = 0; i < this.particles.length; i++) {
+        for (let j = i + 1; j < this.particles.length; j++) {
+          const dx = this.particles[i].x - this.particles[j].x;
+          const dy = this.particles[i].y - this.particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < this.config.connectionDistance) {
+            const opacity = 1 - dist / this.config.connectionDistance;
+            const isHighlight = this.highlightedIndices.has(i) && this.highlightedIndices.has(j);
+            this.ctx.beginPath();
+            this.ctx.moveTo(this.particles[i].x, this.particles[i].y);
+            this.ctx.lineTo(this.particles[j].x, this.particles[j].y);
+            this.ctx.strokeStyle = isHighlight
+              ? this.config.colors.highlightConnection
+              : this.config.colors.connection;
+            this.ctx.lineWidth = isHighlight ? 1.5 : 0.5;
+            this.ctx.globalAlpha = opacity;
+            this.ctx.stroke();
+            this.ctx.globalAlpha = 1;
+          }
+        }
+      }
+
+      /* パーティクル描画 */
+      for (let i = 0; i < this.particles.length; i++) {
+        const p = this.particles[i];
+        const isHighlight = this.highlightedIndices.has(i);
+
+        this.drawPolygon(p.x, p.y, p.size, p.sides, p.rotation);
+
+        if (isHighlight) {
+          this.ctx.fillStyle = 'rgba(181, 82, 46, 0.25)';
+          this.ctx.strokeStyle = this.config.colors.highlightNode;
+          this.ctx.lineWidth = 1.5;
+        } else {
+          this.ctx.fillStyle = this.config.colors.nodeFill;
+          this.ctx.strokeStyle = this.config.colors.node;
+          this.ctx.lineWidth = 1;
+        }
+        this.ctx.fill();
+        this.ctx.stroke();
+      }
+    }
+
+    update(timestamp) {
+      for (const p of this.particles) {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.rotation += p.rotationSpeed;
+
+        if (p.x < -10) p.x = this.width + 10;
+        if (p.x > this.width + 10) p.x = -10;
+        if (p.y < -10) p.y = this.height + 10;
+        if (p.y > this.height + 10) p.y = -10;
+      }
+
+      if (timestamp - this.lastHighlightTime > this.config.highlightInterval) {
+        this.randomHighlight();
+        this.lastHighlightTime = timestamp;
+      }
+    }
+
+    animate(timestamp) {
+      if (!timestamp) timestamp = 0;
+      this.update(timestamp);
+      this.draw();
+      this.animationId = requestAnimationFrame((t) => this.animate(t));
+    }
+
+    drawStatic() {
+      this.draw();
+    }
+
+    destroy() {
+      if (this.animationId) cancelAnimationFrame(this.animationId);
+      if (this.resizeObserver) this.resizeObserver.disconnect();
+    }
+  }
+
+  /* === カウントアップアニメーション === */
+  function countUp(element, target, suffix, duration) {
+    if (prefersReducedMotion) {
+      element.textContent = target;
+      return;
+    }
+    const startTime = performance.now();
+    const easeOut = (t) => 1 - Math.pow(1 - t, 3);
+
+    function step(currentTime) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const easedProgress = easeOut(progress);
+      const current = Math.round(easedProgress * target);
+      element.textContent = current;
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      } else {
+        element.textContent = target;
+      }
+    }
+    requestAnimationFrame(step);
+  }
+
+  /* === スクロール進捗バー === */
+  function updateScrollProgress() {
+    const scrollProgress = document.querySelector('.scroll-progress');
+    if (!scrollProgress) return;
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    scrollProgress.style.width = progress + '%';
+  }
+
+  /* === ヘッダーダークセクション自動検知 === */
+  function updateHeaderTheme() {
+    const header = document.querySelector('.header');
+    if (!header) return;
+    const headerRect = header.getBoundingClientRect();
+    const headerCenter = headerRect.top + headerRect.height / 2;
+    const darkSections = document.querySelectorAll('[data-theme="dark"]');
+    let isOverDark = false;
+    for (const section of darkSections) {
+      const rect = section.getBoundingClientRect();
+      if (headerCenter >= rect.top && headerCenter <= rect.bottom) {
+        isOverDark = true;
+        break;
+      }
+    }
+    header.classList.toggle('header--dark', isOverDark);
+  }
+
+  /* === パララックス（ヒーロークリスタル画像） === */
+  function updateParallax() {
+    if (prefersReducedMotion) return;
+    const crystal = document.querySelector('.signal__crystal-img');
+    if (!crystal) return;
+    const scrollY = window.scrollY;
+    const factor = -0.15;
+    crystal.style.transform = `translateY(${scrollY * factor}px)`;
+  }
+
+  /* === v11: マウス追従アンビエントグロー（アクセントグロー対応） === */
+  function initAmbientGlow() {
+    const signalGlows = document.querySelectorAll('.signal__glow');
+    const findSignalGlow = document.querySelector('.find-signal__glow');
+
+    if (!prefersReducedMotion) {
+      document.addEventListener('mousemove', (e) => {
+        /* ヒーローセクションのグロー追従 */
+        if (signalGlows.length > 0) {
+          const signalSection = document.querySelector('.signal');
+          if (signalSection) {
+            const rect = signalSection.getBoundingClientRect();
+            if (e.clientY >= rect.top && e.clientY <= rect.bottom) {
+              signalGlows.forEach((glow, i) => {
+                /* i=0: メイングロー（追従）、i=1: アクセントグロー（offset付き追従） */
+                const offsetX = i === 0 ? 0 : -200;
+                const offsetY = i === 0 ? 0 : -100;
+                glow.style.left = (e.clientX + offsetX) + 'px';
+                glow.style.top = (e.clientY - rect.top + offsetY) + 'px';
+              });
+            }
+          }
+        }
+        /* FIND SIGNALグロー追従 */
+        if (findSignalGlow) {
+          const fsSection = document.querySelector('.find-signal');
+          if (fsSection) {
+            const rect = fsSection.getBoundingClientRect();
+            if (e.clientY >= rect.top && e.clientY <= rect.bottom) {
+              findSignalGlow.style.left = e.clientX + 'px';
+              findSignalGlow.style.top = (e.clientY - rect.top) + 'px';
+            }
+          }
+        }
+      });
+    }
+  }
+
+  /* === マグネティックボタン === */
+  function initMagneticButtons() {
+    if (prefersReducedMotion) return;
+    const buttons = document.querySelectorAll('.btn-primary');
+    buttons.forEach((btn) => {
+      btn.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        const magnetStrength = 0.15;
+        btn.style.transform = `translate(${x * magnetStrength}px, ${y * magnetStrength - 2}px)`;
+      });
+      btn.addEventListener('mouseleave', () => {
+        btn.style.transform = '';
       });
     });
   }
 
-  /* ======================================================
-     2. SVGノード動的生成（Hero + Final CTA 共通）
-     回路パターンのグリッド座標にノードを配置
-     ====================================================== */
-  function generateCircuitNodes(containerSelector, count) {
-    const nodesSvg = document.querySelector(containerSelector);
-    if (!nodesSvg) return;
+  /* === 3Dチルト（VOICESカード） === */
+  function initCardTilt() {
+    if (prefersReducedMotion) return;
+    const cards = document.querySelectorAll('.voices__card');
+    cards.forEach((card) => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        const tiltX = y * -8;
+        const tiltY = x * 8;
+        card.style.transform = `perspective(800px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) translateY(-6px)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+      });
+    });
+  }
 
-    const TILE_SIZE = 200;
-    const NODE_POSITIONS = [
-      { x: 80, y: 40 },
-      { x: 120, y: 40 },
-      { x: 40, y: 120 },
-      { x: 120, y: 120 },
-      { x: 160, y: 120 },
-      { x: 60, y: 160 },
-    ];
+  /* === ホバーリップル === */
+  function initRipple() {
+    const buttons = document.querySelectorAll('.btn-primary');
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        const ripple = document.createElement('span');
+        ripple.className = 'ripple';
+        const rect = btn.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+        ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+        btn.appendChild(ripple);
+        ripple.addEventListener('animationend', () => ripple.remove());
+      });
+    });
+  }
 
-    const container = nodesSvg.parentElement;
-    const viewWidth = container.offsetWidth || window.innerWidth;
-    const viewHeight = container.offsetHeight || window.innerHeight;
-    const tilesX = Math.ceil(viewWidth / TILE_SIZE) + 1;
-    const tilesY = Math.ceil(viewHeight / TILE_SIZE) + 1;
+  /* === FAQ アコーディオン === */
+  function initFAQ() {
+    const faqHeaders = document.querySelectorAll('.flow__faq-item-header');
+    faqHeaders.forEach((header) => {
+      const handleToggle = () => {
+        const item = header.closest('.flow__faq-item');
+        const isOpen = item.classList.contains('is-open');
+        const body = item.querySelector('.flow__faq-item-body');
 
-    const allNodes = [];
-    for (let ty = 0; ty < tilesY; ty++) {
-      for (let tx = 0; tx < tilesX; tx++) {
-        for (const pos of NODE_POSITIONS) {
-          allNodes.push({
-            x: tx * TILE_SIZE + pos.x,
-            y: ty * TILE_SIZE + pos.y,
-          });
+        /* 他のFAQを閉じる */
+        document.querySelectorAll('.flow__faq-item.is-open').forEach((openItem) => {
+          if (openItem !== item) {
+            openItem.classList.remove('is-open');
+            openItem.querySelector('.flow__faq-item-header').setAttribute('aria-expanded', 'false');
+            openItem.querySelector('.flow__faq-item-body').setAttribute('aria-hidden', 'true');
+          }
+        });
+
+        item.classList.toggle('is-open', !isOpen);
+        header.setAttribute('aria-expanded', !isOpen ? 'true' : 'false');
+        body.setAttribute('aria-hidden', isOpen ? 'true' : 'false');
+      };
+
+      header.addEventListener('click', handleToggle);
+      header.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleToggle();
         }
-      }
-    }
-
-    const targetCount = Math.min(
-      Math.max(count, Math.floor(allNodes.length * 0.15)),
-      count + 10
-    );
-    const shuffled = allNodes.sort(() => Math.random() - 0.5);
-    const selectedNodes = shuffled.slice(0, targetCount);
-
-    const fragment = document.createDocumentFragment();
-    selectedNodes.forEach((node) => {
-      const circle = document.createElementNS(
-        'http://www.w3.org/2000/svg',
-        'circle'
-      );
-      circle.setAttribute('cx', node.x);
-      circle.setAttribute('cy', node.y);
-      circle.setAttribute('r', '3');
-      circle.setAttribute('fill', 'rgba(139, 192, 202, 0.25)');
-      circle.classList.add('circuit-node');
-      fragment.appendChild(circle);
+      });
     });
-    nodesSvg.appendChild(fragment);
   }
 
-  function initCircuitNodes() {
-    /* Hero ノード: 20-30個 */
-    generateCircuitNodes('.hero__nodes', 25);
-    /* Final CTA ノード: 15-20個 */
-    generateCircuitNodes('.final-cta__nodes', 18);
-  }
-
-  /* ======================================================
-     3. ヘッダースクロール検知（IntersectionObserver）
-     ====================================================== */
-  function initHeaderScroll() {
-    const header = document.querySelector('.header');
-    const hero = document.querySelector('.hero');
-    if (!header || !hero) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        header.classList.toggle('is-scrolled', !entry.isIntersecting);
-      },
-      {
-        threshold: 0,
-        rootMargin: '-64px 0px 0px 0px',
-      }
-    );
-    observer.observe(hero);
-  }
-
-  /* ======================================================
-     4. ハンバーガーメニュー + モバイルメニュー
-     ====================================================== */
-  function initHamburger() {
-    const hamburger = document.querySelector('.header__hamburger');
+  /* === モバイルメニュー === */
+  function initMobileMenu() {
+    const menuBtn = document.querySelector('.header__menu-btn');
     const mobileMenu = document.querySelector('.mobile-menu');
-    if (!hamburger || !mobileMenu) return;
+    if (!menuBtn || !mobileMenu) return;
 
-    hamburger.addEventListener('click', () => {
-      const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
-      hamburger.setAttribute('aria-expanded', !isExpanded);
-      mobileMenu.classList.toggle('is-open', !isExpanded);
-      mobileMenu.setAttribute('aria-hidden', isExpanded);
-      /* body スクロールロック */
-      document.body.style.overflow = !isExpanded ? 'hidden' : '';
-    });
+    const toggleMenu = () => {
+      const isOpen = mobileMenu.classList.contains('is-open');
+      mobileMenu.classList.toggle('is-open', !isOpen);
+      menuBtn.classList.toggle('is-open', !isOpen);
+      menuBtn.setAttribute('aria-expanded', !isOpen ? 'true' : 'false');
+      mobileMenu.setAttribute('aria-hidden', isOpen ? 'true' : 'false');
+      document.body.style.overflow = !isOpen ? 'hidden' : '';
 
-    /* メニュー内リンククリックで閉じる */
+      if (!isOpen) {
+        const firstLink = mobileMenu.querySelector('a');
+        if (firstLink) {
+          setTimeout(() => firstLink.focus(), 100);
+        }
+      } else {
+        menuBtn.focus();
+      }
+    };
+
+    menuBtn.addEventListener('click', toggleMenu);
+
     mobileMenu.querySelectorAll('a').forEach((link) => {
       link.addEventListener('click', () => {
-        hamburger.setAttribute('aria-expanded', 'false');
-        mobileMenu.classList.remove('is-open');
-        mobileMenu.setAttribute('aria-hidden', 'true');
-        document.body.style.overflow = '';
+        if (mobileMenu.classList.contains('is-open')) {
+          toggleMenu();
+        }
       });
     });
-  }
 
-  /* ======================================================
-     5. 汎用フェードアップ（IO フォールバック）
-     data-reveal 属性 + .is-visible クラス
-     ====================================================== */
-  function initRevealAnimations() {
-    /* scroll-driven animations がサポートされている場合はスキップ */
-    if (CSS.supports && CSS.supports('animation-timeline', 'view()')) return;
-
-    const revealElements = document.querySelectorAll('[data-reveal]');
-    if (!revealElements.length) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.15 }
-    );
-    revealElements.forEach((el) => observer.observe(el));
-  }
-
-  /* ======================================================
-     6. Problem セクション: 課題カードの stagger フェードアップ
-     ====================================================== */
-  function initProblemStagger() {
-    const items = document.querySelectorAll('.problem__item');
-    if (!items.length) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.15 }
-    );
-    items.forEach((el) => observer.observe(el));
-  }
-
-  /* ======================================================
-     7. Solution セクション: 線描画 + ノード点灯アニメーション
-     ====================================================== */
-  function initSolutionAnimation() {
-    const section = document.querySelector('.solution');
-    if (!section) return;
-
-    const lines = section.querySelectorAll('.solution__line');
-    const nodes = section.querySelectorAll('.solution__node-circle');
-    const arrows = section.querySelectorAll('.solution__arrow');
-
-    /* stroke-dasharray/dashoffset を設定 */
-    lines.forEach((line) => {
-      const length = line.getTotalLength();
-      line.style.strokeDasharray = length;
-      line.style.strokeDashoffset = length;
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && mobileMenu.classList.contains('is-open')) {
+        toggleMenu();
+        menuBtn.focus();
+      }
     });
 
-    let animated = false;
+    /* フォーカストラップ */
+    mobileMenu.addEventListener('keydown', (e) => {
+      if (e.key !== 'Tab') return;
+      if (!mobileMenu.classList.contains('is-open')) return;
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !animated) {
-          animated = true;
+      const focusableElements = mobileMenu.querySelectorAll(
+        'a[href], button, textarea, input[type="text"], input[type="radio"], input[type="checkbox"], select, [tabindex]:not([tabindex="-1"])'
+      );
+      if (focusableElements.length === 0) return;
 
-          /* 左ノード点灯 */
-          nodes[0].classList.add('is-lit');
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
 
-          /* Step 1: 左→中央の線描画 */
-          lines[0].style.strokeDashoffset = '0';
-
-          setTimeout(() => {
-            /* 左→中央の矢印表示 */
-            if (arrows[0]) arrows[0].style.opacity = '1';
-            /* 中央ノード点灯 */
-            nodes[1].classList.add('is-lit');
-
-            setTimeout(() => {
-              /* Step 2: 中央→右の線描画 */
-              lines[1].style.strokeDashoffset = '0';
-
-              setTimeout(() => {
-                /* 中央→右の矢印表示 */
-                if (arrows[1]) arrows[1].style.opacity = '1';
-                /* 右ノード点灯 */
-                nodes[2].classList.add('is-lit');
-              }, 800);
-            }, 200);
-          }, 800);
-
-          observer.unobserve(entry.target);
+      if (e.shiftKey) {
+        if (document.activeElement === firstElement) {
+          e.preventDefault();
+          lastElement.focus();
         }
-      },
-      { threshold: 0.4 }
-    );
-    observer.observe(section);
-  }
-
-  /* ======================================================
-     8. Scale セクション: カード stagger + カウントアップ
-     ====================================================== */
-  function initScaleSection() {
-    const cards = document.querySelectorAll('.scale__card');
-    if (!cards.length) return;
-
-    /* カードフェードアップ */
-    const cardObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            cardObserver.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.15 }
-    );
-    cards.forEach((el) => cardObserver.observe(el));
-
-    /* カウントアップ */
-    const section = document.querySelector('.scale');
-    if (!section) return;
-
-    let counted = false;
-
-    const countObserver = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !counted) {
-          counted = true;
-          startCountUp();
-          countObserver.unobserve(entry.target);
-        }
-      },
-      { threshold: 0.5 }
-    );
-    countObserver.observe(section);
-  }
-
-  /* カウントアップ: requestAnimationFrame + easeOutQuart */
-  function startCountUp() {
-    const elements = document.querySelectorAll('[data-count-target]');
-    const DURATION = 1500;
-
-    elements.forEach((el) => {
-      const target = parseInt(el.getAttribute('data-count-target'), 10);
-      const suffix = el.getAttribute('data-count-suffix') || '';
-      const start = performance.now();
-
-      function update(now) {
-        const elapsed = now - start;
-        const progress = Math.min(elapsed / DURATION, 1);
-        /* easeOutQuart: t => 1 - (1 - t) ** 4 */
-        const eased = 1 - Math.pow(1 - progress, 4);
-        const current = Math.round(target * eased);
-        el.textContent = current.toLocaleString() + suffix;
-
-        if (progress < 1) {
-          requestAnimationFrame(update);
+      } else {
+        if (document.activeElement === lastElement) {
+          e.preventDefault();
+          firstElement.focus();
         }
       }
-
-      requestAnimationFrame(update);
     });
   }
 
-  /* ======================================================
-     9. Features セクション: 各Feature独立フェードアップ
-     ====================================================== */
-  function initFeaturesAnimation() {
-    const items = document.querySelectorAll('.features__item');
-    if (!items.length) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.15 }
-    );
-    items.forEach((el) => observer.observe(el));
-  }
-
-  /* ======================================================
-     10. Voices セクション: カード stagger フェードアップ
-     ====================================================== */
-  function initVoicesAnimation() {
-    const cards = document.querySelectorAll('.voices__card');
-    if (!cards.length) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.15 }
-    );
-    cards.forEach((el) => observer.observe(el));
-  }
-
-  /* ======================================================
-     11. Flow セクション: ステップ stagger + 接続線描画 + ノード点灯
-     ====================================================== */
-  function initFlowAnimation() {
-    const steps = document.querySelectorAll('.flow__step');
-    const connectorLines = document.querySelectorAll('.flow__connector-line');
-    if (!steps.length) return;
-
-    /* 接続線の dasharray/dashoffset を設定 */
-    connectorLines.forEach((line) => {
-      /* SVG line 要素の長さを取得 */
-      const length = line.getBoundingClientRect
-        ? 48
-        : 48; /* コネクタ幅 = 48px */
-      line.style.strokeDasharray = length;
-      line.style.strokeDashoffset = length;
-      line.setAttribute('data-length', length);
-    });
-
-    let animated = false;
-    const section = document.querySelector('.flow');
-    if (!section) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !animated) {
-          animated = true;
-
-          /* ステップを順次表示 */
-          steps.forEach((step, i) => {
-            setTimeout(() => {
-              step.classList.add('is-visible');
-
-              /* ノード点灯（遅延） */
-              const node = step.querySelector('.flow__step-node');
-              if (node) {
-                setTimeout(() => {
-                  node.classList.add('is-lit');
-                }, 200);
-              }
-
-              /* 次の接続線を描画 */
-              if (connectorLines[i]) {
-                setTimeout(() => {
-                  connectorLines[i].style.strokeDashoffset = '0';
-                }, 100);
-              }
-            }, i * 200);
-          });
-
-          observer.unobserve(entry.target);
-        }
-      },
-      { threshold: 0.3 }
-    );
-    observer.observe(section);
-  }
-
-  /* ======================================================
-     12. FAQ セクション: アコーディオン開閉
-     ====================================================== */
-  function initFaqAccordion() {
-    const items = document.querySelectorAll('.faq__item');
-    if (!items.length) return;
-
-    items.forEach((item) => {
-      const trigger = item.querySelector('.faq__trigger');
-      const panel = item.querySelector('.faq__panel');
-      if (!trigger || !panel) return;
-
-      trigger.addEventListener('click', () => {
-        const isOpen = item.classList.contains('is-open');
-
-        /* 他のアイテムを閉じる（アコーディオン方式） */
-        items.forEach((otherItem) => {
-          if (otherItem !== item && otherItem.classList.contains('is-open')) {
-            closeItem(otherItem);
-          }
-        });
-
-        if (isOpen) {
-          closeItem(item);
-        } else {
-          openItem(item);
-        }
-      });
-    });
-
-    function openItem(item) {
-      const trigger = item.querySelector('.faq__trigger');
-      const panel = item.querySelector('.faq__panel');
-      item.classList.add('is-open');
-      trigger.setAttribute('aria-expanded', 'true');
-      panel.removeAttribute('hidden');
-      /* 実際のコンテンツ高さを計算して max-height を設定 */
-      panel.style.maxHeight = panel.scrollHeight + 'px';
-    }
-
-    function closeItem(item) {
-      const trigger = item.querySelector('.faq__trigger');
-      const panel = item.querySelector('.faq__panel');
-      item.classList.remove('is-open');
-      trigger.setAttribute('aria-expanded', 'false');
-      panel.style.maxHeight = '0';
-      /* トランジション完了後に hidden を付与 */
-      panel.addEventListener(
-        'transitionend',
-        () => {
-          if (!item.classList.contains('is-open')) {
-            panel.setAttribute('hidden', '');
-          }
-        },
-        { once: true }
-      );
-    }
-  }
-
-  /* ======================================================
-     13. Final CTA セクション: フェードアップ
-     ====================================================== */
-  function initFinalCtaAnimation() {
-    const title = document.querySelector('.final-cta__title');
-    const sub = document.querySelector('.final-cta__sub');
-    const ctaGroup = document.querySelector('.final-cta__cta-group');
-    if (!title) return;
-
-    const elements = [title, sub, ctaGroup].filter(Boolean);
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          elements.forEach((el) => el.classList.add('is-visible'));
-          observer.unobserve(entry.target);
-        }
-      },
-      { threshold: 0.3 }
-    );
-    observer.observe(document.querySelector('.final-cta'));
-  }
-
-  /* ======================================================
-     14. スムーズスクロール（ヘッダーオフセット補正）
-     ====================================================== */
+  /* === スムースアンカースクロール === */
   function initSmoothScroll() {
-    document.querySelectorAll('a[href^="#"]').forEach((link) => {
-      link.addEventListener('click', (e) => {
-        const targetId = link.getAttribute('href');
-        if (targetId === '#') return;
-
-        const target = document.querySelector(targetId);
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+      anchor.addEventListener('click', (e) => {
+        const href = anchor.getAttribute('href');
+        if (href === '#') return;
+        const target = document.querySelector(href);
         if (!target) return;
-
         e.preventDefault();
-        const headerHeight = 64;
-        const targetPosition =
-          target.getBoundingClientRect().top + window.scrollY - headerHeight;
-
+        const headerHeight = 72;
+        const targetPosition = target.getBoundingClientRect().top + window.scrollY - headerHeight;
         window.scrollTo({
           top: targetPosition,
-          behavior: 'smooth',
+          behavior: prefersReducedMotion ? 'auto' : 'smooth',
         });
       });
     });
   }
 
-  /* ======================================================
-     初期化
-     ====================================================== */
-  function init() {
-    initMouseFollow();
-    initHeaderScroll();
-    initHamburger();
-    initSmoothScroll();
+  /* === SIFT ノードホバーインタラクション === */
+  function initSiftInteraction() {
+    const nodes = document.querySelectorAll('.sift__node');
+    const connections = document.querySelectorAll('.sift__connection');
 
-    /* reduced-motion でない場合のみアニメーション初期化 */
-    if (!prefersReducedMotion()) {
-      initCircuitNodes();
-      initRevealAnimations();
-      initProblemStagger();
-      initSolutionAnimation();
-      initScaleSection();
-      initFeaturesAnimation();
-      initVoicesAnimation();
-      initFlowAnimation();
-      initFinalCtaAnimation();
-    }
-
-    /* FAQ アコーディオンは常に有効 */
-    initFaqAccordion();
+    nodes.forEach((node) => {
+      node.addEventListener('mouseenter', () => {
+        connections.forEach((conn) => {
+          conn.style.stroke = 'rgba(181, 82, 46, 0.25)';
+          conn.style.strokeWidth = '1.5px';
+        });
+      });
+      node.addEventListener('mouseleave', () => {
+        connections.forEach((conn) => {
+          conn.style.stroke = '';
+          conn.style.strokeWidth = '';
+        });
+      });
+    });
   }
 
-  /* DOMContentLoaded で起動 */
+  /* === v11: FLOWタイムライン: スクロール連動ラインフィル === */
+  function initFlowTimeline() {
+    const items = document.querySelectorAll('.flow__timeline-item');
+    if (items.length === 0) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3, rootMargin: '0px 0px -80px 0px' });
+
+    items.forEach((item, i) => {
+      item.style.transitionDelay = (i * 150) + 'ms';
+      observer.observe(item);
+    });
+  }
+
+  /* === IntersectionObserver: アニメーション発火 === */
+  function initScrollAnimations() {
+    /* slideInLeft アニメーション（NOISE, THREE SIGNALS） */
+    const slideInElements = document.querySelectorAll('[data-animate="slideInLeft"], .three-signals__signal');
+    if (slideInElements.length > 0) {
+      const slideObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const siblings = entry.target.parentElement.querySelectorAll('[data-animate="slideInLeft"], .three-signals__signal');
+            let delay = 0;
+            siblings.forEach((el) => {
+              el.style.transitionDelay = delay + 'ms';
+              delay += 120;
+            });
+            entry.target.classList.add('is-visible');
+            slideObserver.unobserve(entry.target);
+          }
+        });
+      }, OBSERVER_CONFIG);
+      slideInElements.forEach((el) => slideObserver.observe(el));
+    }
+
+    /* scaleUp アニメーション（SIFT ノード） */
+    const siftNodes = document.querySelectorAll('.sift__node');
+    if (siftNodes.length > 0) {
+      const siftObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            let delay = 0;
+            siftNodes.forEach((node) => {
+              setTimeout(() => node.classList.add('is-visible'), delay);
+              delay += 80;
+            });
+            siftObserver.disconnect();
+          }
+        });
+      }, OBSERVER_CONFIG);
+      const siftSection = document.querySelector('.sift__diagram');
+      if (siftSection) siftObserver.observe(siftSection);
+    }
+
+    /* countUp アニメーション（PROOF） */
+    const proofNumbers = document.querySelectorAll('.proof__number[data-target]');
+    if (proofNumbers.length > 0) {
+      let counted = false;
+      const proofObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !counted) {
+            counted = true;
+            proofNumbers.forEach((num) => {
+              const target = parseInt(num.dataset.target, 10);
+              countUp(num, target, '', 1200);
+            });
+            proofObserver.disconnect();
+          }
+        });
+      }, PROOF_OBSERVER_CONFIG);
+      const proofSection = document.querySelector('.proof__grid');
+      if (proofSection) proofObserver.observe(proofSection);
+    }
+
+    /* fadeInUp アニメーション（FIND YOUR SIGNAL） */
+    const fadeElements = document.querySelectorAll('.find-signal__heading, .find-signal__subcopy, .find-signal__cta-group');
+    if (fadeElements.length > 0) {
+      const fadeObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            fadeObserver.unobserve(entry.target);
+          }
+        });
+      }, OBSERVER_CONFIG);
+      fadeElements.forEach((el) => fadeObserver.observe(el));
+    }
+  }
+
+  /* === 初期化 === */
+  function init() {
+    /* テキストスプリット */
+    const heading = document.querySelector('.signal__heading[data-split]');
+    if (heading) splitText(heading);
+
+    /* Canvas ネットワークグラフ（ヒーロー） */
+    const signalCanvas = document.querySelector('.signal__canvas');
+    if (signalCanvas) {
+      new NetworkGraph(signalCanvas, NETWORK_CONFIG);
+    }
+
+    /* Canvas ネットワークグラフ（最終CTA） */
+    const findSignalCanvas = document.querySelector('.find-signal__canvas');
+    if (findSignalCanvas) {
+      new NetworkGraph(findSignalCanvas, FIND_SIGNAL_CONFIG);
+    }
+
+    /* スクロールイベント */
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          updateScrollProgress();
+          updateHeaderTheme();
+          updateParallax();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+
+    /* 初期状態の更新 */
+    updateScrollProgress();
+    updateHeaderTheme();
+
+    /* インタラクション初期化 */
+    initAmbientGlow();
+    initMagneticButtons();
+    initCardTilt();
+    initRipple();
+    initFAQ();
+    initMobileMenu();
+    initSmoothScroll();
+    initSiftInteraction();
+    initFlowTimeline();
+    initScrollAnimations();
+  }
+
+  /* DOMContentLoaded で初期化 */
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {
